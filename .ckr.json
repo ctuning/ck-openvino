@@ -1,0 +1,10 @@
+{
+  "data_uoa": "ck-openvino",
+  "data_uid": "865a1132db60c968",
+  "data_alias": "ck-openvino",
+  "data_name": "ck-openvino",
+  "dict": {
+    "shared": "git",
+    "url": "https://github.com/ctuning/ck-openvino"
+  }
+}
