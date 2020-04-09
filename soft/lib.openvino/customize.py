@@ -74,5 +74,6 @@ def setup(i):
     env[ep] = install_dir
     env[ep+'_LIB'] = os.path.join(install_dir, 'lib')
     env[ep+'_INCLUDE'] = os.path.join(install_dir, 'include')
+    env[ep+'_MO_DIR'] = os.path.join(install_dir, 'dldt', 'model-optimizer')
 
     return {'return':0, 'bat':s}
