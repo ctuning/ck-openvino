@@ -22,7 +22,12 @@ function exit_if_error() {
 # NB: Must be called 'obj' for make to work properly if PACKAGE_SKIP_LINUX_MAKE != "YES".
 export OBJ_DIR=${INSTALL_DIR}/obj
 
-export SRC_DIR=${INSTALL_DIR}/dldt
+if [ "${PACKAGE_GIT_CHECKOUT}" == "2019_R3.1" ]; then
+  export SRC_DIR=${INSTALL_DIR}/dldt/inference-engine
+else
+  export SRC_DIR=${INSTALL_DIR}/dldt
+fi
+
 export BIN_DIR=${INSTALL_DIR}/bin
 export LIB_DIR=${INSTALL_DIR}/lib
 export INC_DIR=${INSTALL_DIR}/include
