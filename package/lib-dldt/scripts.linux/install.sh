@@ -7,26 +7,30 @@
 # See CK COPYRIGHT.txt for copyright details.
 #
 
-# PACKAGE_DIR
-# INSTALL_DIR
+# Environment variables defined by CK:
+# PACKAGE_DIR - where the package source files are (under $CK_REPOS/ck-openvino).
+# INSTALL_DIR - where the libraries, binaries, etc. are to be deployed (under $CK_TOOLS).
 
 function exit_if_error() {
-  if [ "${?}" != "0" ]; then exit 1; fi
+  message=${1:-"unknown"}
+  if [ "${?}" != "0" ]; then
+    echo "Error: ${message}!"
+    exit 1
+  fi
 }
 
+# NB: Must be called 'obj' for make to work properly if PACKAGE_SKIP_LINUX_MAKE != "YES".
+export OBJ_DIR=${INSTALL_DIR}/obj
 
 export SRC_DIR=${INSTALL_DIR}/dldt
-export OBJ_DIR=${INSTALL_DIR}/obj # NB: Must be called 'obj' for make to work properly.
+export BIN_DIR=${INSTALL_DIR}/bin
 export LIB_DIR=${INSTALL_DIR}/lib
-export INCLUDE_DIR=${INSTALL_DIR}/include
+export INC_DIR=${INSTALL_DIR}/include
 
-echo "OpenVINO source directory: ${SRC_DIR}"
-echo "OpenVINO build  directory: ${OBJ_DIR}"
+rm -rf   ${OBJ_DIR} ${LIB_DIR} ${BIN_DIR} ${INC_DIR} 
+mkdir -p ${OBJ_DIR} ${LIB_DIR} ${BIN_DIR} ${INC_DIR} 
 
-rm -rf ${OBJ_DIR} ${INCLUDE_DIR} ${LIB_DIR}
-mkdir -p ${OBJ_DIR} ${INCLUDE_DIR} ${LIB_DIR}
-
-# Configure.
+# Configure the package.
 read -d '' CMK_CMD <<EO_CMK_CMD
 ${CK_ENV_TOOL_CMAKE_BIN}/cmake \
   -DCMAKE_C_COMPILER="${CK_CC_PATH_FOR_CMAKE}" \
@@ -51,22 +55,38 @@ ${CK_ENV_TOOL_CMAKE_BIN}/cmake \
   "${SRC_DIR}"
 EO_CMK_CMD
 
-# OpenVINO does not supprot CMAKE_INSTALL_PREFIX yet!: https://github.com/opencv/dldt/issues/423
+# NB: Omitting since OpenVINO does not support CMAKE_INSTALL_PREFIX yet!: https://github.com/opencv/dldt/issues/423
 #  -DCMAKE_INSTALL_PREFIX="${INSTALL_DIR}" \
 
 # First, print the EXACT command we are about to run (with all interpolations that have not been specifically blocked).
+echo "Configuring the package with 'CMake' ..."
 echo ${CMK_CMD}
-echo ""
+
+echo
+
 # Now, run it from the build directory.
 cd ${OBJ_DIR} && eval ${CMK_CMD}
-if [ "${?}" != "0" ] ; then
-  echo "Error: CMake failed!"
-  exit 1
-fi
+exit_if_error "CMake failed"
 
-export CK_MAKE_EXTRA="VERBOSE=1"
+echo
 
-# FIXME: Do not create a dummy file.
-touch ${LIB_DIR}/libmlperf_loadgen.a
+# Build the package.
+num_jobs=${CK_HOST_CPU_NUMBER_OF_PROCESSORS:-1}
+echo "Building the package with 'make' using ${num_jobs} job(s) ..."
+make --jobs ${num_jobs}  "VERBOSE=1"
+exit_if_error "make failed"
+
+# Install the binaries, libraries and include files.
+echo "Copying the binaries to '${BIN_DIR}' ..."
+cp ${SRC_DIR}/bin/intel64/Release/* ${BIN_DIR}
+exit_if_error "copying the binaries failed"
+
+echo "Copying the libraries to '${LIB_DIR}' ..."
+cp ${SRC_DIR}/bin/intel64/Release/lib/* ${LIB_DIR}
+exit_if_error "copying the libraries failed"
+
+echo "Copying the include files to '${INC_DIR}' ..."
+cp -r ${SRC_DIR}/inference-engine/include/* ${INC_DIR}
+exit_if_error "copying the include files failed"
 
 return 0

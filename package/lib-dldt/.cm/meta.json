@@ -9,7 +9,8 @@
       "PACKAGE_GIT_SUBMODULES": "YES",
       "PACKAGE_PATCH": "NO",
       "PACKAGE_SKIP_CLEAN_SRC_DIR": "YES",
-      "PACKAGE_SKIP_LINUX_MAKE": "NO",
+      "PACKAGE_SKIP_CLEAN_OBJ": "YES",
+      "PACKAGE_SKIP_LINUX_MAKE": "YES",
       "PACKAGE_SUB_DIR": "dldt",
       "PACKAGE_URL": "https://github.com/opencv/dldt"
     },
@@ -43,7 +44,7 @@
       "no_tags": "python-package"
     }
   },
-  "end_full_path_universal": "lib/libmlperf_loadgen.a",
+  "end_full_path_universal": "lib/libinference_engine.so",
   "only_for_host_os_tags": [
     "linux"
   ],
@@ -51,8 +52,8 @@
     "linux"
   ],
   "process_script": "install",
-  "soft_uoa": "6c44b702d4441af1",
-  "suggested_path": "lib-dldt",
+  "soft_uoa": "5e1100048ab875d7",
+  "suggested_path": "lib-openvino",
   "tags": [
     "lib",
     "openvino",
