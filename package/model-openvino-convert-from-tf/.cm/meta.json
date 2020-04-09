@@ -17,16 +17,37 @@
       "sort": 10, 
       "tags": "lib,openvino"
     }, 
-    "lib-tensorflow": {
+    "lib-python-numpy": {
       "local": "yes", 
-      "name": "TensorFlow library", 
+      "name": "Python NumPy library", 
+      "version_from": [
+        1,
+        12,
+        0
+      ],
       "sort": 20, 
-      "tags": "lib,tensorflow"
+      "tags": "lib,python-package,numpy"
+    }, 
+    "lib-python-tensorflow": {
+      "local": "yes", 
+      "name": "Python TensorFlow library", 
+      "version_from": [
+        1,
+        2,
+        0
+      ],
+      "version_to": [
+        2,
+        1,
+        99
+      ],
+      "sort": 30, 
+      "tags": "lib,python-package,tensorflow"
     }, 
     "model-source": {
       "local": "yes", 
       "name": "Original TensorFlow model", 
-      "sort": 10, 
+      "sort": 5, 
       "tags": "model,tf", 
       "update_tags_if_env": {
         "for.openvino": [
