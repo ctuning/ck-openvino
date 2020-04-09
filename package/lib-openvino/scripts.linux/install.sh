@@ -83,7 +83,7 @@ exit_if_error "copying the binaries failed"
 
 echo "Copying the libraries to '${LIB_DIR}' ..."
 cp ${SRC_DIR}/bin/intel64/Release/lib/* ${LIB_DIR}
-co ${SRC_DIR}/inference-engine/temp/omp/lib/libiomp*.so ${LIB_DIR}
+cp ${SRC_DIR}/inference-engine/temp/omp/lib/libiomp*.so ${LIB_DIR}
 exit_if_error "copying the libraries failed"
 
 echo "Copying the include files to '${INC_DIR}' ..."
