@@ -60,7 +60,7 @@
     "linux"
   ],
   "process_script": "install",
-  "soft_uoa": "5e1100048ab875d7",
+  "soft_uoa": "455b809caa0daa92",
   "suggested_path": "lib-openvino",
   "tags": [
     "lib",
