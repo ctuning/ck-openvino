@@ -1,0 +1,50 @@
+{
+  "backup_data_uid": "71c3343e7b623d05", 
+  "build_compiler_vars": {}, 
+  "compile_cmds": {
+    "default": {
+      "cmd": "bash ../ck_compile$#script_ext#$"
+    }
+  }, 
+  "compile_deps": {
+    "compiler": {
+      "local": "yes", 
+      "name": "C compiler", 
+      "tags": "compiler,lang-c"
+    }
+  }, 
+  "data_name": "mlperf-inference-v0.5", 
+  "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$", 
+  "main_language": "c", 
+  "print_files_after_run": [
+    "stderr.log", 
+    "stdout.log"
+  ], 
+  "process_in_tmp": "yes", 
+  "program": "yes", 
+  "run_cmds": {
+    "default": {
+      "ignore_return_code": "no", 
+      "run_time": {
+        "run_cmd_main": "..$#dir_sep#$ck_run$#script_ext#$", 
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
+        "run_output_files": [
+          "stdout.log", 
+          "stderr.log"
+        ]
+      }
+    }
+  }, 
+  "run_vars": {
+    "CK_VAR1": 123, 
+    "CK_VAR2": 666
+  }, 
+  "tags": [
+    "program", 
+    "lang-c"
+  ], 
+  "target_file": "a", 
+  "template_type": "C program workflow", 
+  "use_compile_script": "yes"
+}
