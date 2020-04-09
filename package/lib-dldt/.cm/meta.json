@@ -23,6 +23,10 @@
       "force_target_as_host": "yes",
       "local": "yes",
       "name": "CMake tool",
+      "version_from": [
+        3,
+        5
+      ],
       "skip_from_bat": "yes",
       "sort": 20,
       "tags": "tool,cmake"
@@ -38,7 +42,11 @@
       "add_to_path": "no",
       "force_target_as_host": "yes",
       "local": "yes",
-      "name": "OpenCV",
+      "name": "OpenCV library",
+      "version_from": [
+        3,
+        4
+      ],
       "sort": 50,
       "tags": "lib,opencv",
       "no_tags": "python-package"
