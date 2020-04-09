@@ -56,6 +56,17 @@
           }
         ]
       }
+    },
+    "python": {
+      "local": "yes", 
+      "name": "Python interpreter", 
+      "version_from": [
+        3,
+        4,
+        0
+      ],
+      "sort": 15, 
+      "tags": "compiler,python"
     }
   }, 
   "end_full_path_universal": "graph.xml", 
