@@ -1,0 +1,72 @@
+{
+  "check_exit_status": "yes",
+  "need_cpu_info": "yes",
+  "customize": {
+    "git_src_dir": "dldt",
+    "install_env": {
+      "PACKAGE_BUILD_TYPE": "skip",
+      "PACKAGE_GIT": "YES",
+      "PACKAGE_GIT_SUBMODULES": "YES",
+      "PACKAGE_PATCH": "NO",
+      "PACKAGE_SKIP_CLEAN_SRC_DIR": "YES",
+      "PACKAGE_SKIP_LINUX_MAKE": "NO",
+      "PACKAGE_SUB_DIR": "dldt",
+      "PACKAGE_URL": "https://github.com/opencv/dldt"
+    },
+    "no_ver_in_suggested_path": "yes",
+    "version": "master"
+  },
+  "deps": {
+    "cmake": {
+      "add_to_path": "no",
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "CMake tool",
+      "skip_from_bat": "yes",
+      "sort": 20,
+      "tags": "tool,cmake"
+    },
+    "compiler": {
+      "add_to_path": "no",
+      "local": "yes",
+      "name": "C++ compiler",
+      "sort": 40,
+      "tags": "compiler,lang-cpp"
+    },
+    "opencv": {
+      "add_to_path": "no",
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "OpenCV",
+      "sort": 50,
+      "tags": "lib,opencv",
+      "no_tags": "python-package"
+    }
+  },
+  "end_full_path_universal": "lib/libmlperf_loadgen.a",
+  "only_for_host_os_tags": [
+    "linux"
+  ],
+  "only_for_target_os_tags": [
+    "linux"
+  ],
+  "process_script": "install",
+  "soft_uoa": "6c44b702d4441af1",
+  "suggested_path": "lib-dldt",
+  "tags": [
+    "lib",
+    "openvino",
+    "dldt",
+    "vmaster"
+  ],
+  "use_preprocess_scripts_from_another_entry": {
+    "data_uoa": "process-compiler-for-cmake",
+    "COMMENT data_uid": "fd44428fbc77f77f",
+    "module_uoa": "script"
+  },
+  "use_scripts_from_another_entry": {
+    "data_uoa": "download-and-install-package",
+    "COMMENT data_uid": "cd9ccc74060b3d18",
+    "module_uoa": "script"
+  }
+}
