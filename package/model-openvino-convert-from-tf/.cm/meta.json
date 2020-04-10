@@ -37,7 +37,7 @@
         0
       ],
       "sort": 21, 
-      "tags": "lib,python-package,networkx"
+      "tags": "lib,python-package,defusedxml"
     }, 
     "lib-python-networkx": {
       "local": "yes", 
