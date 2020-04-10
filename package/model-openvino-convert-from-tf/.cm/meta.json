@@ -106,7 +106,7 @@
   "variations": {
     "ssd-mobilenet": {
       "extra_customize": {
-        "package_name": "OpenVINO-from-TF model (SSS-MobileNet)"
+        "package_name": "OpenVINO-from-TF model (SSD-MobileNet)"
       }, 
       "extra_env": {
         "_MODEL_TO_CONVERT": "tf2ov_ssd_mobilenet"
