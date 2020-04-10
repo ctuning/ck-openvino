@@ -28,6 +28,28 @@
       "sort": 20, 
       "tags": "lib,python-package,numpy"
     }, 
+    "lib-python-defusedxml": {
+      "local": "yes", 
+      "name": "Python defusedxml library", 
+      "version_from": [
+        0,
+        5,
+        0
+      ],
+      "sort": 21, 
+      "tags": "lib,python-package,networkx"
+    }, 
+    "lib-python-networkx": {
+      "local": "yes", 
+      "name": "Python NetworkX library", 
+      "version_from": [
+        1,
+        11,
+        0
+      ],
+      "sort": 22, 
+      "tags": "lib,python-package,networkx"
+    }, 
     "lib-python-tensorflow": {
       "local": "yes", 
       "name": "Python TensorFlow library", 
