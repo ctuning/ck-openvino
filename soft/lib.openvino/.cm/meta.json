@@ -2,7 +2,7 @@
   "auto_detect": "yes",
   "customize": {
     "check_that_exists": "yes",
-    "env_prefix": "CK_ENV_LIB_DLDT_IE",
+    "env_prefix": "CK_ENV_LIB_OPENVINO",
     "limit_recursion_dir_search": {
       "linux": 2
     },
@@ -19,7 +19,6 @@
     "openvino",
     "dldt",
     "inference-engine",
-    "intel",
-    "vmaster"
+    "intel"
   ]
 }
