@@ -25,33 +25,35 @@ endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_FOLDER})
 
-# OpenCV libs
+# OpenCV lib.
 find_package(OpenCV REQUIRED)
-find_package(InferenceEngine REQUIRED)
 
+# OpenVINO Inference Engine.
+MESSAGE(STATUS "IE_LIBRARY=${IE_LIBRARY}")
+MESSAGE(STATUS "IE_EXTENSION_LIB=${IE_EXTENSION_LIB}")
 
-# Loadgen
+# MLPerf LoadGen lib.
 if (NOT(LOADGEN_DIR))
-   MESSAGE(FATAL_ERROR "LOADGEN_DIR not passed. Use -DLOADGEN_DIR /path/to/loadgen/")
+   MESSAGE(FATAL_ERROR "LOADGEN_DIR unspecified. Use -DLOADGEN_DIR /path/to/loadgen")
 endif()
-
 if (NOT(LOADGEN_LIB_DIR))
     set(LOADGEN_LIB_DIR ${LOADGEN_DIR})
-    message(STATUS "LOADGEN_LIB_DIR unspecified. Set to ${LOADGEN_LIB_DIR}.")
-    find_library(LOADGEN_LIBRARY NAMES mlperf_loadgen PATHS "${LOADGEN_DIR}/")
-    if (LOADGEN_LIBRARY_NOTFOUND)
-        MESSAGE(FATAL_ERROR "Loadgen library not found. Specify parent dir with -DLOADGEN_LIB_DIR")
-    endif()
-    message(STATUS "LOADGEN_LIBRARY Found: ${LOADGEN_LIBRARY}" )
-    
+    message(STATUS "LOADGEN_LIB_DIR unspecified. Set to ${LOADGEN_DIR}.")
 endif()
+message(STATUS "LOADGEN_DIR=${LOADGEN_DIR}")
+message(STATUS "LOADGEN_LIB_DIR=${LOADGEN_LIB_DIR}")
 
-message(STATUS "Loadgen_dir=${LOADGEN_DIR}")
+find_library(LOADGEN_LIBRARY NAMES mlperf_loadgen PATHS "${LOADGEN_LIB_DIR}/")
+if (LOADGEN_LIBRARY_NOTFOUND)
+    MESSAGE(FATAL_ERROR "LoadGen library (libmlperf_loadgen.a) not found in ${LOADGEN_LIB_DIR}!")
+endif()
+message(STATUS "LOADGEN_LIBRARY Found: ${LOADGEN_LIBRARY}" )
+
 
 include_directories (
     ${OpenCV_INCLUDE_DIRS}
     ${LOADGEN_DIR}
-	${BOOST_INCLUDE_DIRS}
+    ${BOOST_INCLUDE_DIRS}
     ${InferenceEngine_INCLUDE_DIRS}
     ${IE_SRC_DIR}/extension
 )
@@ -65,3 +67,4 @@ target_link_libraries(${TARGET_NAME}
         ${IE_EXTENSION_LIB}
         ${IE_LIBRARY}
     )
+
