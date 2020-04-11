@@ -29,6 +29,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_FOLDER})
 find_package(OpenCV REQUIRED)
 
 # OpenVINO Inference Engine.
+find_package(InferenceEngine REQUIRED)
+message(STATUS "Adding InferenceEngine_INCLUDE_DIRS:  ${InferenceEngine_INCLUDE_DIRS} ${IE_SRC_DIR}/extension")
 MESSAGE(STATUS "IE_LIBRARY=${IE_LIBRARY}")
 MESSAGE(STATUS "IE_EXTENSION_LIB=${IE_EXTENSION_LIB}")
 
