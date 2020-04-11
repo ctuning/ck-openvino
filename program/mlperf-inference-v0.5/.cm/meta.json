@@ -9,8 +9,27 @@
   "compile_deps": {
     "compiler": {
       "local": "yes", 
-      "name": "C compiler", 
+      "name": "C compiler",
+      "sort": 10,
       "tags": "compiler,lang-c"
+    },
+    "cmake": {
+      "local": "yes", 
+      "name": "CMake tool", 
+      "sort": 20,
+      "tags": "tool,cmake"
+    },
+    "loadgen": {
+      "local": "yes", 
+      "name": "MLPerf Inference LoadGen library", 
+      "sort": 30,
+      "tags": "lib,loadgen,static"
+    },
+    "openvino": {
+      "local": "yes", 
+      "name": "OpenVINO toolkit", 
+      "sort": 40,
+      "tags": "lib,openvino,2019_R3.1"
     }
   }, 
   "data_name": "mlperf-inference-v0.5", 
