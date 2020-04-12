@@ -2,7 +2,7 @@
   "check_exit_status": "yes", 
   "customize": {
     "install_env": {
-      "PACKAGE_NAME": "converted_model.xml", 
+      "MODEL_OUTPUT_NAME_XML": "converted_model.xml",
       "PACKAGE_VERSION": "1"
     }, 
     "no_os_in_suggested_path": "yes", 
@@ -91,7 +91,7 @@
       "tags": "compiler,python"
     }
   }, 
-  "end_full_path_universal": "graph.xml", 
+  "end_full_path_universal": "converted_model.xml", 
   "process_script": "install", 
   "soft_uoa": "model.openvino", 
   "suggested_path": "model-openvino-converted-from-tf", 
