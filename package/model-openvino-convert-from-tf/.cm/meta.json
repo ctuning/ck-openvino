@@ -2,7 +2,7 @@
   "check_exit_status": "yes", 
   "customize": {
     "install_env": {
-      "MODEL_OUTPUT_NAME_XML": "converted_model.xml",
+      "MODEL_NAME": "converted_model",
       "PACKAGE_VERSION": "1"
     }, 
     "no_os_in_suggested_path": "yes", 

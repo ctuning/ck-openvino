@@ -2,7 +2,7 @@
 
 ${CK_ENV_COMPILER_PYTHON_FILE} \
   ${CK_ENV_LIB_OPENVINO_MO_DIR}/mo.py \
-  --model_name ${MODEL_OUTPUT_NAME_XML} \
+  --model_name ${MODEL_NAME} \
   --input_model ${CK_ENV_TENSORFLOW_MODEL_TF_FROZEN_FILEPATH} \
   --input_shape [1,${CK_ENV_TENSORFLOW_MODEL_DEFAULT_HEIGHT},${CK_ENV_TENSORFLOW_MODEL_DEFAULT_WIDTH},3] \
   --reverse_input_channels \
