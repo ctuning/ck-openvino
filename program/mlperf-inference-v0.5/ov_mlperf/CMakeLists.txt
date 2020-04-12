@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-set(TARGET_NAME ov_mlperf.out)
+set(TARGET_NAME ov_mlperf)
 project(${TARGET_NAME})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE -fstack-protector-strong") # -Wno-error")

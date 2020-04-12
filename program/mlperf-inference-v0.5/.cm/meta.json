@@ -39,19 +39,20 @@
     }
   }, 
   "data_name": "mlperf-inference-v0.5", 
-  "extra_ld_vars": "$<<CK_EXTRA_LIB_M>>$", 
+  "extra_ld_vars": "", 
   "main_language": "c", 
   "print_files_after_run": [
     "stderr.log", 
     "stdout.log"
   ], 
+  "pass_env_to_resolve": "yes", 
   "process_in_tmp": "yes", 
   "program": "yes", 
   "run_cmds": {
-    "default": {
+    "offline_ssdm": {
       "ignore_return_code": "no", 
       "run_time": {
-        "run_cmd_main": "..$#dir_sep#$ck_run$#script_ext#$", 
+        "run_cmd_main": "Release/ov_mlperf --scenario ${CK_LOADGEN_SCENARIO} --mode ${CK_LOADGEN_MODE} --mlperf_conf_filename ${CK_LOADGEN_MLPERF_CONF} --user_conf_filename ${CK_LOADGEN_USER_CONF} --total_sample_count ${CK_LOADGEN_DATASET_SIZE} --data_path ${CK_ENV_DATASET_COCO} --dataset ${CK_ENV_DATASET_TYPE} --model_path ${CK_ENV_OPENVINO_MODEL_XML} --model_name ${CK_OPENVINO_MODEL_NAME} --nstreams 10 --nireq 10 --nthreads 10 --batch_size ${CK_BATCH_SIZE} --device cpu --nwarmup_iters 1000",
         "run_cmd_out1": "stdout.log", 
         "run_cmd_out2": "stderr.log", 
         "run_output_files": [
@@ -61,10 +62,32 @@
       }
     }
   }, 
+  "run_deps": {
+    "images": {
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "COCO 2017 dataset (original)",
+      "sort": 100,
+      "tags": "dataset,coco,2017,val,original"
+    },
+    "weights": {
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "OpenVINO model",
+      "sort": 110,
+      "tags": "model,openvino"
+    }
+  },
   "run_vars": {
-    "CK_VAR1": 123, 
-    "CK_VAR2": 666
+    "CK_BATCH_SIZE":           1,
+    "CK_LOADGEN_DATASET_SIZE": 5000,
+    "CK_LOADGEN_SCENARIO":     "Offline",
+    "CK_LOADGEN_MODE":         "Performance",
+    "CK_LOADGEN_MLPERF_CONF":  "../measurements/clx_9282-2s_openvino-linux/ssd-small/Offline/mlperf.conf",
+    "CK_LOADGEN_USER_CONF":    "../measurements/clx_9282-2s_openvino-linux/ssd-small/Offline/user.conf",
+    "CK_OPENVINO_MODEL_NAME":  "ssd-mobilenet"
   }, 
+  "skip_bin_ext": "yes",
   "tags": [
     "mlperf",
     "mlperf-inference",
