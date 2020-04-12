@@ -28,6 +28,28 @@
       "sort": 20, 
       "tags": "lib,python-package,numpy"
     }, 
+    "lib-python-defusedxml": {
+      "local": "yes", 
+      "name": "Python defusedxml library", 
+      "version_from": [
+        0,
+        5,
+        0
+      ],
+      "sort": 21, 
+      "tags": "lib,python-package,defusedxml"
+    }, 
+    "lib-python-networkx": {
+      "local": "yes", 
+      "name": "Python NetworkX library", 
+      "version_from": [
+        1,
+        11,
+        0
+      ],
+      "sort": 22, 
+      "tags": "lib,python-package,networkx"
+    }, 
     "lib-python-tensorflow": {
       "local": "yes", 
       "name": "Python TensorFlow library", 
@@ -37,8 +59,8 @@
         0
       ],
       "version_to": [
-        2,
         1,
+        15,
         99
       ],
       "sort": 30, 
@@ -84,7 +106,7 @@
   "variations": {
     "ssd-mobilenet": {
       "extra_customize": {
-        "package_name": "OpenVINO-from-TF model (SSS-MobileNet)"
+        "package_name": "OpenVINO-from-TF model (SSD-MobileNet)"
       }, 
       "extra_env": {
         "_MODEL_TO_CONVERT": "tf2ov_ssd_mobilenet"

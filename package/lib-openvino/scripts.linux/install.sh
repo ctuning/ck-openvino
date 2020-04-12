@@ -19,16 +19,22 @@ function exit_if_error() {
   fi
 }
 
+export DLDT_DIR=${INSTALL_DIR}/dldt
+if [ "${PACKAGE_GIT_CHECKOUT}" == "2019_R3.1" ]; then
+  export SRC_DIR=${DLDT_DIR}/inference-engine
+else
+  export SRC_DIR=${DLDT_DIR}
+fi
+
 # NB: Must be called 'obj' for make to work properly if PACKAGE_SKIP_LINUX_MAKE != "YES".
 export OBJ_DIR=${INSTALL_DIR}/obj
 
-export SRC_DIR=${INSTALL_DIR}/dldt
 export BIN_DIR=${INSTALL_DIR}/bin
 export LIB_DIR=${INSTALL_DIR}/lib
 export INC_DIR=${INSTALL_DIR}/include
 
-rm -rf   ${OBJ_DIR} ${LIB_DIR} ${BIN_DIR} ${INC_DIR} 
-mkdir -p ${OBJ_DIR} ${LIB_DIR} ${BIN_DIR} ${INC_DIR} 
+rm -rf   ${OBJ_DIR} ${LIB_DIR} ${BIN_DIR} ${INC_DIR}
+mkdir -p ${OBJ_DIR} ${LIB_DIR} ${BIN_DIR} ${INC_DIR}
 
 # Configure the package.
 read -d '' CMK_CMD <<EO_CMK_CMD
@@ -83,11 +89,11 @@ exit_if_error "copying the binaries failed"
 
 echo "Copying the libraries to '${LIB_DIR}' ..."
 cp ${SRC_DIR}/bin/intel64/Release/lib/* ${LIB_DIR}
-cp ${SRC_DIR}/inference-engine/temp/omp/lib/libiomp*.so ${LIB_DIR}
+cp ${DLDT_DIR}/inference-engine/temp/omp/lib/libiomp*.so ${LIB_DIR}
 exit_if_error "copying the libraries failed"
 
 echo "Copying the include files to '${INC_DIR}' ..."
-cp -r ${SRC_DIR}/inference-engine/include/* ${INC_DIR}
+cp -r ${DLDT_DIR}/inference-engine/include/* ${INC_DIR}
 exit_if_error "copying the include files failed"
 
 return 0

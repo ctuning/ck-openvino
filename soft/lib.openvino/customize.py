@@ -69,11 +69,18 @@ def setup(i):
     env=i['env']
     ep=cus['env_prefix']
 
-    lib_dir = os.path.dirname(fp)
-    install_dir = os.path.dirname(lib_dir)
-    env[ep] = install_dir
-    env[ep+'_LIB'] = os.path.join(install_dir, 'lib')
-    env[ep+'_INCLUDE'] = os.path.join(install_dir, 'include')
-    env[ep+'_MO_DIR'] = os.path.join(install_dir, 'dldt', 'model-optimizer')
+    env[ep+'_IE_PATH']     = fp
+    env[ep+'_IE_NAME']     = os.path.basename(fp)
+    lib_dir                = os.path.dirname(fp)
+    install_dir            = os.path.dirname(lib_dir)
+    env[ep]                = install_dir
+    env[ep+'_BIN_DIR']     = os.path.join(install_dir, 'bin')
+    env[ep+'_LIB_DIR']     = os.path.join(install_dir, 'lib')
+    env[ep+'_INCLUDE_DIR'] = os.path.join(install_dir, 'include')
+    env[ep+'_OBJ_DIR']     = os.path.join(install_dir, 'obj')
+    env[ep+'_SRC_DIR']     = os.path.join(install_dir, 'dldt')
+    env[ep+'_IE_DIR']      = os.path.join(install_dir, 'dldt', 'inference-engine')
+    env[ep+'_MO_DIR']      = os.path.join(install_dir, 'dldt', 'model-optimizer')
+    env[ep+'_VERSION']     = cus['install_env'].get('PACKAGE_VERSION','')
 
     return {'return':0, 'bat':s}
