@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-set(TARGET_NAME ov_mlperf)
+set(TARGET_NAME ov_mlperf.out)
 project(${TARGET_NAME})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE -fstack-protector-strong") # -Wno-error")
@@ -20,23 +20,39 @@ endif()
 if (NOT(BIN_FOLDER))
     set(BIN_FOLDER ${BUILD_DIR}/${CMAKE_BUILD_TYPE})
 else()
-	set(BIN_FOLDER ${BUILD_DIR}/${CMAKE_BUILD_TYPE}_${BIN_FOLDER})
+    set(BIN_FOLDER ${BUILD_DIR}/${CMAKE_BUILD_TYPE}_${BIN_FOLDER})
 endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_FOLDER})
 
 # OpenCV lib.
-find_package(OpenCV REQUIRED)
+if (NOT(OPENCV_DIR))
+    MESSAGE(FATAL_ERROR "OPENCV_DIR unspecified. Use -DOPENCV_DIR=/path/to/ck/opencv")
+endif()
+MESSAGE(STATUS "OPENCV_DIR=${OPENCV_DIR}")
+find_package(OpenCV REQUIRED PATHS ${OPENCV_DIR})
 
 # OpenVINO Inference Engine.
-find_package(InferenceEngine REQUIRED)
-message(STATUS "Adding InferenceEngine_INCLUDE_DIRS:  ${InferenceEngine_INCLUDE_DIRS} ${IE_SRC_DIR}/extension")
-MESSAGE(STATUS "IE_LIBRARY=${IE_LIBRARY}")
-MESSAGE(STATUS "IE_EXTENSION_LIB=${IE_EXTENSION_LIB}")
+if (NOT(OPENVINO_DIR))
+    MESSAGE(FATAL_ERROR "OPENVINO_DIR unspecified. Use -DOPENVINO_DIR=/path/to/ck/openvino")
+endif()
+set(OPENVINO_DIR                   "${OPENVINO_DIR}")
+set(OPENVINO_LIB_DIR               "${OPENVINO_DIR}/lib")
+set(OPENVINO_LIBRARY               "${OPENVINO_LIB_DIR}/libinference_engine.so")
+set(OPENVINO_CPU_EXTENSION_LIBRARY "${OPENVINO_LIB_DIR}/libcpu_extension.so")
+set(OPENVINO_INCLUDE_DIR           "${OPENVINO_DIR}/include")
+set(OPENVINO_EXTENSION_DIR         "${OPENVINO_DIR}/dldt/inference-engine/src/extension")
+
+MESSAGE(STATUS "OPENVINO_DIR=${OPENVINO_DIR}")
+MESSAGE(STATUS "OPENVINO_LIB_DIR=${OPENVINO_LIB_DIR}")
+MESSAGE(STATUS "OPENVINO_LIBRARY=${OPENVINO_LIBRARY}")
+MESSAGE(STATUS "OPENVINO_CPU_EXTENSION_LIBRARY=${OPENVINO_CPU_EXTENSION_LIBRARY}")
+MESSAGE(STATUS "OPENVINO_INCLUDE_DIR=${OPENVINO_INCLUDE_DIR}")
+MESSAGE(STATUS "OPENVINO_EXTENSION_DIR=${OPENVINO_EXTENSION_DIR}")
 
 # MLPerf LoadGen lib.
 if (NOT(LOADGEN_DIR))
-   MESSAGE(FATAL_ERROR "LOADGEN_DIR unspecified. Use -DLOADGEN_DIR /path/to/loadgen")
+    MESSAGE(FATAL_ERROR "LOADGEN_DIR unspecified. Use -DLOADGEN_DIR=/path/to/ck/loadgen")
 endif()
 if (NOT(LOADGEN_LIB_DIR))
     set(LOADGEN_LIB_DIR ${LOADGEN_DIR})
@@ -51,22 +67,22 @@ if (LOADGEN_LIBRARY_NOTFOUND)
 endif()
 message(STATUS "LOADGEN_LIBRARY Found: ${LOADGEN_LIBRARY}" )
 
-
+# Include directories.
 include_directories (
     ${OpenCV_INCLUDE_DIRS}
-    ${LOADGEN_DIR}
     ${BOOST_INCLUDE_DIRS}
-    ${InferenceEngine_INCLUDE_DIRS}
-    ${IE_SRC_DIR}/extension
+    ${LOADGEN_DIR}
+    ${OPENVINO_INCLUDE_DIR}
+    ${OPENVINO_EXTENSION_DIR}
 )
 
 set(SOURCE_FILES backend_ov.h dataset_ov.h sut_ov.h infer_request_wrap.h main_ov.cc)
 add_executable(${TARGET_NAME} ${SOURCE_FILES})
 
+# Link libraries.
 target_link_libraries(${TARGET_NAME}
-        ${LOADGEN_LIBRARY}
-        ${OpenCV_LIBS}
-        ${IE_EXTENSION_LIB}
-        ${IE_LIBRARY}
-    )
-
+    ${OpenCV_LIBS}
+    ${LOADGEN_LIBRARY}
+    ${OPENVINO_LIBRARY}
+    ${OPENVINO_CPU_EXTENSION_LIBRARY}
+)

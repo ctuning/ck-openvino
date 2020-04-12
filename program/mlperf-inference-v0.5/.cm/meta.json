@@ -30,6 +30,12 @@
       "name": "OpenVINO toolkit", 
       "sort": 40,
       "tags": "lib,openvino,2019_R3.1"
+    },
+    "opencv": {
+      "local": "yes", 
+      "name": "OpenCV library", 
+      "sort": 50,
+      "tags": "lib,opencv,channel-stable"
     }
   }, 
   "data_name": "mlperf-inference-v0.5", 
@@ -60,10 +66,15 @@
     "CK_VAR2": 666
   }, 
   "tags": [
+    "mlperf",
+    "mlperf-inference",
+    "mlperf-inference-v0.5",
+    "inference",
+    "v0.5",
+    "openvino",
     "program", 
     "lang-c"
   ], 
-  "target_file": "a", 
-  "template_type": "C program workflow", 
+  "target_file": "Release/ov_mlperf",
   "use_compile_script": "yes"
 }
