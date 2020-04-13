@@ -60,16 +60,63 @@
   "process_in_tmp": "yes", 
   "program": "yes", 
   "run_cmds": {
-    "offline_ssdm": {
+    "singleinference_ssdm": {
       "ignore_return_code": "no", 
       "run_time": {
-        "run_cmd_main": "$#BIN_FILE#$ --scenario ${CK_LOADGEN_SCENARIO} --mode ${CK_LOADGEN_MODE} --mlperf_conf_filename ${CK_LOADGEN_MLPERF_CONF} --user_conf_filename ${CK_LOADGEN_USER_CONF} --total_sample_count ${CK_LOADGEN_DATASET_SIZE} --data_path ${CK_ENV_DATASET_COCO} --dataset ${CK_ENV_DATASET_TYPE} --model_path ${CK_ENV_OPENVINO_MODEL_XML} --model_name ${CK_OPENVINO_MODEL_NAME} --nstreams 10 --nireq 10 --nthreads 10 --batch_size ${CK_BATCH_SIZE} --device cpu --nwarmup_iters 1000",
+        "run_cmd_main": "$#BIN_FILE#$ --scenario ${CK_LOADGEN_SCENARIO} --mode ${CK_LOADGEN_MODE} --mlperf_conf_filename ${CK_LOADGEN_MLPERF_CONF} --user_conf_filename ${CK_LOADGEN_USER_CONF} --total_sample_count ${CK_LOADGEN_DATASET_SIZE} --data_path ${CK_ENV_DATASET_COCO} --dataset ${CK_ENV_DATASET_TYPE} --device ${CK_OPENVINO_DEVICE} --model_path ${CK_ENV_OPENVINO_MODEL_XML} --model_name ${CK_OPENVINO_MODEL_NAME} --nireq ${CK_OPENVINO_NIREQ} --nstreams ${CK_OPENVINO_NSTREAMS} --nthreads ${CK_OPENVINO_NTHREADS} --nwarmup_iters ${CK_OPENVINO_NWARMUP_ITERS} --batch_size ${CK_BATCH_SIZE}",
         "run_cmd_out1": "stdout.log", 
         "run_cmd_out2": "stderr.log", 
         "run_output_files": [
           "stdout.log", 
           "stderr.log"
         ]
+      },
+      "run_vars": {
+        "CK_LOADGEN_SCENARIO"       : "Offline",
+        "CK_LOADGEN_MODE"           : "Performance",
+        "CK_LOADGEN_MLPERF_CONF"    : "../measurements/clx_9282-2s_openvino-linux/ssd-small/SingleInference/mlperf.conf",
+        "CK_LOADGEN_USER_CONF"      : "../measurements/clx_9282-2s_openvino-linux/ssd-small/SingleInference/user.conf",
+        "CK_OPENVINO_NIREQ"         : 1,
+        "CK_OPENVINO_NSTREAMS"      : 1,
+        "CK_OPENVINO_NTHREADS"      : 1,
+        "CK_OPENVINO_NWARMUP_ITERS" : 1,
+        "CK_BATCH_SIZE"             : 1
+      }
+    },
+    "offline_ssdm": {
+      "ignore_return_code": "no", 
+      "run_time": {
+        "run_cmd_main": "$#BIN_FILE#$ --scenario ${CK_LOADGEN_SCENARIO} --mode ${CK_LOADGEN_MODE} --mlperf_conf_filename ${CK_LOADGEN_MLPERF_CONF} --user_conf_filename ${CK_LOADGEN_USER_CONF} --total_sample_count ${CK_LOADGEN_DATASET_SIZE} --data_path ${CK_ENV_DATASET_COCO} --dataset ${CK_ENV_DATASET_TYPE} --device ${CK_OPENVINO_DEVICE} --model_path ${CK_ENV_OPENVINO_MODEL_XML} --model_name ${CK_OPENVINO_MODEL_NAME} --nireq ${CK_OPENVINO_NIREQ} --nstreams ${CK_OPENVINO_NSTREAMS} --nthreads ${CK_OPENVINO_NTHREADS} --nwarmup_iters ${CK_OPENVINO_NWARMUP_ITERS} --batch_size ${CK_BATCH_SIZE}",
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
+        "run_output_files": [
+          "stdout.log", 
+          "stderr.log"
+        ]
+      },
+      "run_vars": {
+        "CK_LOADGEN_SCENARIO"       : "Offline",
+        "CK_LOADGEN_MODE"           : "Performance",
+        "CK_LOADGEN_MLPERF_CONF"    : "../measurements/clx_9282-2s_openvino-linux/ssd-small/Offline/mlperf.conf",
+        "CK_LOADGEN_USER_CONF"      : "../measurements/clx_9282-2s_openvino-linux/ssd-small/Offline/user.conf"
+      }
+    },
+    "offline_ssdm_accuracy": {
+      "ignore_return_code": "no", 
+      "run_time": {
+        "run_cmd_main": "$#BIN_FILE#$ --scenario ${CK_LOADGEN_SCENARIO} --mode ${CK_LOADGEN_MODE} --mlperf_conf_filename ${CK_LOADGEN_MLPERF_CONF} --user_conf_filename ${CK_LOADGEN_USER_CONF} --total_sample_count ${CK_LOADGEN_DATASET_SIZE} --data_path ${CK_ENV_DATASET_COCO} --dataset ${CK_ENV_DATASET_TYPE} --device ${CK_OPENVINO_DEVICE} --model_path ${CK_ENV_OPENVINO_MODEL_XML} --model_name ${CK_OPENVINO_MODEL_NAME} --nireq ${CK_OPENVINO_NIREQ} --nstreams ${CK_OPENVINO_NSTREAMS} --nthreads ${CK_OPENVINO_NTHREADS} --nwarmup_iters ${CK_OPENVINO_NWARMUP_ITERS} --batch_size ${CK_BATCH_SIZE}",
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
+        "run_output_files": [
+          "stdout.log", 
+          "stderr.log"
+        ]
+      },
+      "run_vars": {
+        "CK_LOADGEN_SCENARIO"       : "Offline",
+        "CK_LOADGEN_MODE"           : "Accuracy",
+        "CK_LOADGEN_MLPERF_CONF"    : "../measurements/clx_9282-2s_openvino-linux/ssd-small/Offline/mlperf.conf",
+        "CK_LOADGEN_USER_CONF"      : "../measurements/clx_9282-2s_openvino-linux/ssd-small/Offline/user.conf"
       }
     }
   }, 
@@ -90,14 +137,20 @@
     }
   },
   "run_vars": {
-    "CK_BATCH_SIZE":           1,
-    "CK_LOADGEN_DATASET_SIZE": 5000,
-    "CK_LOADGEN_SCENARIO":     "Offline",
-    "CK_LOADGEN_MODE":         "Performance",
-    "CK_LOADGEN_MLPERF_CONF":  "../measurements/clx_9282-2s_openvino-linux/ssd-small/Offline/mlperf.conf",
-    "CK_LOADGEN_USER_CONF":    "../measurements/clx_9282-2s_openvino-linux/ssd-small/Offline/user.conf",
-    "CK_OPENVINO_MODEL_NAME":  "ssd-mobilenet"
+    "CK_LOADGEN_SCENARIO"       : "Offline",
+    "CK_LOADGEN_MODE"           : "Performance",
+    "CK_LOADGEN_MLPERF_CONF"    : "../measurements/clx_9282-2s_openvino-linux/ssd-small/Offline/mlperf.conf",
+    "CK_LOADGEN_USER_CONF"      : "../measurements/clx_9282-2s_openvino-linux/ssd-small/Offline/user.conf",
+    "CK_LOADGEN_DATASET_SIZE"   : 5000,
+    "CK_OPENVINO_DEVICE"        : "cpu",
+    "CK_OPENVINO_MODEL_NAME"    : "ssd-mobilenet",
+    "CK_OPENVINO_NIREQ"         : 112,
+    "CK_OPENVINO_NSTREAMS"      : 112,
+    "CK_OPENVINO_NTHREADS"      : 112,
+    "CK_OPENVINO_NWARMUP_ITERS" : 1000,
+    "CK_BATCH_SIZE"             : 1
   }, 
+  "target_file": "Release/ov_mlperf",
   "skip_bin_ext": "yes",
   "tags": [
     "mlperf",
@@ -109,6 +162,5 @@
     "program", 
     "lang-c"
   ], 
-  "target_file": "Release/ov_mlperf",
   "use_compile_script": "yes"
 }
