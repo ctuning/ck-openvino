@@ -52,7 +52,7 @@
     "offline_ssdm": {
       "ignore_return_code": "no", 
       "run_time": {
-        "run_cmd_main": "Release/ov_mlperf --scenario ${CK_LOADGEN_SCENARIO} --mode ${CK_LOADGEN_MODE} --mlperf_conf_filename ${CK_LOADGEN_MLPERF_CONF} --user_conf_filename ${CK_LOADGEN_USER_CONF} --total_sample_count ${CK_LOADGEN_DATASET_SIZE} --data_path ${CK_ENV_DATASET_COCO} --dataset ${CK_ENV_DATASET_TYPE} --model_path ${CK_ENV_OPENVINO_MODEL_XML} --model_name ${CK_OPENVINO_MODEL_NAME} --nstreams 10 --nireq 10 --nthreads 10 --batch_size ${CK_BATCH_SIZE} --device cpu --nwarmup_iters 1000",
+        "run_cmd_main": "$#BIN_FILE#$ --scenario ${CK_LOADGEN_SCENARIO} --mode ${CK_LOADGEN_MODE} --mlperf_conf_filename ${CK_LOADGEN_MLPERF_CONF} --user_conf_filename ${CK_LOADGEN_USER_CONF} --total_sample_count ${CK_LOADGEN_DATASET_SIZE} --data_path ${CK_ENV_DATASET_COCO} --dataset ${CK_ENV_DATASET_TYPE} --model_path ${CK_ENV_OPENVINO_MODEL_XML} --model_name ${CK_OPENVINO_MODEL_NAME} --nstreams 10 --nireq 10 --nthreads 10 --batch_size ${CK_BATCH_SIZE} --device cpu --nwarmup_iters 1000",
         "run_cmd_out1": "stdout.log", 
         "run_cmd_out2": "stderr.log", 
         "run_output_files": [
