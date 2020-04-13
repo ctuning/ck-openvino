@@ -20,70 +20,77 @@ endif()
 if (NOT(BIN_FOLDER))
     set(BIN_FOLDER ${BUILD_DIR}/${CMAKE_BUILD_TYPE})
 else()
-	set(BIN_FOLDER ${BUILD_DIR}/${CMAKE_BUILD_TYPE}_${BIN_FOLDER})
+    set(BIN_FOLDER ${BUILD_DIR}/${CMAKE_BUILD_TYPE}_${BIN_FOLDER})
 endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_FOLDER})
 
-# OpenCV libs
-find_package(OpenCV REQUIRED)
-find_package(InferenceEngine REQUIRED)
-
-message(STATUS "Adding InferenceEngine_INCLUDE_DIRS:  ${InferenceEngine_INCLUDE_DIRS} ${IE_SRC_DIR}/extension")
-
-
-# Loadgen
-if (NOT(LOADGEN_DIR))
-   MESSAGE(FATAL_ERROR "LOADGEN_DIR not passed. Use -DLOADGEN_DIR /path/to/loadgen/")
+# OpenCV lib.
+if (NOT(OPENCV_DIR))
+    MESSAGE(FATAL_ERROR "OPENCV_DIR unspecified. Use -DOPENCV_DIR=/path/to/ck/opencv")
 endif()
+MESSAGE(STATUS "OPENCV_DIR=${OPENCV_DIR}")
+find_package(OpenCV REQUIRED PATHS ${OPENCV_DIR})
 
+# OpenVINO Inference Engine.
+if (NOT(OPENVINO_DIR))
+    MESSAGE(FATAL_ERROR "OPENVINO_DIR unspecified. Use -DOPENVINO_DIR=/path/to/ck/openvino")
+endif()
+set(OPENVINO_DIR                   "${OPENVINO_DIR}")
+set(OPENVINO_LIB_DIR               "${OPENVINO_DIR}/lib")
+set(OPENVINO_LIBRARY               "${OPENVINO_LIB_DIR}/libinference_engine.so")
+set(OPENVINO_CPU_EXTENSION_LIBRARY "${OPENVINO_LIB_DIR}/libcpu_extension.so")
+set(OPENVINO_INCLUDE_DIR           "${OPENVINO_DIR}/include")
+set(OPENVINO_EXTENSION_DIR         "${OPENVINO_DIR}/dldt/inference-engine/src/extension")
+
+MESSAGE(STATUS "OPENVINO_DIR=${OPENVINO_DIR}")
+MESSAGE(STATUS "OPENVINO_LIB_DIR=${OPENVINO_LIB_DIR}")
+MESSAGE(STATUS "OPENVINO_LIBRARY=${OPENVINO_LIBRARY}")
+MESSAGE(STATUS "OPENVINO_CPU_EXTENSION_LIBRARY=${OPENVINO_CPU_EXTENSION_LIBRARY}")
+MESSAGE(STATUS "OPENVINO_INCLUDE_DIR=${OPENVINO_INCLUDE_DIR}")
+MESSAGE(STATUS "OPENVINO_EXTENSION_DIR=${OPENVINO_EXTENSION_DIR}")
+
+# MLPerf LoadGen lib.
+if (NOT(LOADGEN_DIR))
+    MESSAGE(FATAL_ERROR "LOADGEN_DIR unspecified. Use -DLOADGEN_DIR=/path/to/ck/loadgen")
+endif()
 if (NOT(LOADGEN_LIB_DIR))
     set(LOADGEN_LIB_DIR ${LOADGEN_DIR})
-    message(STATUS "LOADGEN_LIB_DIR unspecified. Set to ${LOADGEN_LIB_DIR}.")
-    find_library(LOADGEN_LIBRARY NAMES mlperf_loadgen PATHS "${LOADGEN_DIR}/")
-    if (LOADGEN_LIBRARY_NOTFOUND)
-        MESSAGE(FATAL_ERROR "Loadgen library not found. Specify parent dir with -DLOADGEN_LIB_DIR")
-    endif()
-    message(STATUS "LOADGEN_LIBRARY Found: ${LOADGEN_LIBRARY}" )
-    
+    message(STATUS "LOADGEN_LIB_DIR unspecified. Set to ${LOADGEN_DIR}.")
 endif()
+message(STATUS "LOADGEN_DIR=${LOADGEN_DIR}")
+message(STATUS "LOADGEN_LIB_DIR=${LOADGEN_LIB_DIR}")
 
-# Add BOOST
+find_library(LOADGEN_LIBRARY NAMES mlperf_loadgen PATHS "${LOADGEN_LIB_DIR}/")
+if (LOADGEN_LIBRARY_NOTFOUND)
+    MESSAGE(FATAL_ERROR "LoadGen library (libmlperf_loadgen.a) not found in ${LOADGEN_LIB_DIR}!")
+endif()
+message(STATUS "LOADGEN_LIBRARY Found: ${LOADGEN_LIBRARY}" )
+
+# Add BOOST.
+set(BOOST_SYSTEM_LIB "/usr/lib64/libboost_system.so")
 if (NOT(BOOST_SYSTEM_LIB))
     message(FATAL_ERROR "BOOST_SYSTEM_LIB required. Please set -DBOOST_SYSTEM_LIB=/path/to/libboost_system.so")
 endif()
 
-#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/lib)
-#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/lib)
-
-#set(SOURCE_FILES backend_ov.h dataset_ov.h sut_ov.h infer_request_wrap.h main_ov.cc)
-#add_executable(${TARGET_NAME} ${SOURCE_FILES})
-
-message(STATUS "Loadgen_dir=${LOADGEN_DIR}")
-#include_directories("/home/t/MLPerf/mlperf-tracking/inference/loadgen/")
+# Include directories.
 include_directories (
-    ${CMAKE_CURRENT_SOURCE_DIR}/backend
     ${OpenCV_INCLUDE_DIRS}
+    ${BOOST_INCLUDE_DIRS}
     ${LOADGEN_DIR}
-    ${InferenceEngine_INCLUDE_DIRS}
-    ${IE_SRC_DIR}/extension
-    ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/gflags/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/common
+    ${OPENVINO_INCLUDE_DIR}
+    ${OPENVINO_EXTENSION_DIR}
 )
 
-#========================== Target =============================================
 set(SOURCE_FILES backend_ov.h dataset_ov.h sut_ov.h infer_request_wrap.h item_ov.h main_ov.cc)
 add_executable(${TARGET_NAME} ${SOURCE_FILES})
-message(STATUS " === InferenceEngine_LIBRARIES: ${InferenceEngine_LIBRARIES} === ")
-target_link_libraries(${TARGET_NAME}
-        pthread
-        ${LOADGEN_LIBRARY}
-        ${BOOST_SYSTEM_LIB}
-        ${OpenCV_LIBS}
-	${IE_RELEASE_LIBRARY}
-	${InferenceEngine_LIBRARIES}
-        IE::ie_cpu_extension
-        ${IE_LIBRARY}
-	#"${IE_ROOT_DIR}/external/mkltiny_lnx/lib/libmkl_tiny_omp.so"
-    )
 
+# Link libraries.
+target_link_libraries(${TARGET_NAME}
+    pthread
+    ${OpenCV_LIBS}
+    ${BOOST_SYSTEM_LIB}
+    ${LOADGEN_LIBRARY}
+    ${OPENVINO_LIBRARY}
+    ${OPENVINO_CPU_EXTENSION_LIBRARY}
+)

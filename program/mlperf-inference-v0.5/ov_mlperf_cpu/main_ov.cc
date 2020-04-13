@@ -243,7 +243,7 @@ int main(int argc, char **argv) {
     void* qsl = mlperf::c::ConstructQSL(0, "QSL", 4, total_sample_count,
             perf_sample_count, loadQuerySamples, unloadQuerySamples);
 
-    mlperf::c::StartTest(sut, qsl, settings, log_settings);
+    mlperf::c::StartTest(sut, qsl, settings);
 
     mlperf::c::DestroyQSL(qsl);
     mlperf::c::DestroySUT(sut);

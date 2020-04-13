@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BLD_DIR=${PWD}
-SRC_DIR=../ov_mlperf/
+SRC_DIR=../ov_mlperf_cpu/
 
 # Configure.
 ${CK_ENV_TOOL_CMAKE_BIN}/${CK_CMAKE} ${CK_VERBOSE:-"--verbose=1"} \
