@@ -67,16 +67,19 @@ if (LOADGEN_LIBRARY_NOTFOUND)
 endif()
 message(STATUS "LOADGEN_LIBRARY Found: ${LOADGEN_LIBRARY}" )
 
-# Add BOOST.
-set(BOOST_SYSTEM_LIB "/usr/lib64/libboost_system.so")
-if (NOT(BOOST_SYSTEM_LIB))
-    message(FATAL_ERROR "BOOST_SYSTEM_LIB required. Please set -DBOOST_SYSTEM_LIB=/path/to/libboost_system.so")
+# Boost C++ libs.
+if (NOT(BOOST_DIR))
+    MESSAGE(FATAL_ERROR "BOOST_DIR unspecified. Use -DBOOST_DIR=/path/to/ck/boost")
 endif()
+set(BOOST_SYSTEM_LIB  "${BOOST_DIR}/lib/libboost_system.so")
+set(BOOST_INCLUDE_DIR "${BOOST_DIR}/include")
+MESSAGE(STATUS "BOOST_SYSTEM_LIB=${BOOST_SYSTEM_LIB}")
+MESSAGE(STATUS "BOOST_INCLUDE_DIR=${BOOST_INCLUDE_DIR}")
 
 # Include directories.
-include_directories (
+include_directories(
     ${OpenCV_INCLUDE_DIRS}
-    ${BOOST_INCLUDE_DIRS}
+    ${BOOST_INCLUDE_DIR}
     ${LOADGEN_DIR}
     ${OPENVINO_INCLUDE_DIR}
     ${OPENVINO_EXTENSION_DIR}
@@ -87,7 +90,6 @@ add_executable(${TARGET_NAME} ${SOURCE_FILES})
 
 # Link libraries.
 target_link_libraries(${TARGET_NAME}
-    pthread
     ${OpenCV_LIBS}
     ${BOOST_SYSTEM_LIB}
     ${LOADGEN_LIBRARY}

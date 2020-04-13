@@ -12,6 +12,7 @@ ${CK_ENV_TOOL_CMAKE_BIN}/${CK_CMAKE} ${CK_VERBOSE:-"--verbose=1"} \
 -DCMAKE_AR="${CK_AR}"                                \
 -DCMAKE_RANLIB="${CK_RANLIB}"                        \
 -DCMAKE_LINKER="${CK_LD}"                            \
+-DBOOST_DIR="${CK_ENV_LIB_BOOST}"                    \
 -DOPENCV_DIR="${CK_ENV_LIB_OPENCV_LIB}"              \
 -DOPENVINO_DIR="${CK_ENV_LIB_OPENVINO}"              \
 -DLOADGEN_LIB_DIR="${CK_ENV_LIB_MLPERF_LOADGEN_LIB}" \

@@ -36,11 +36,22 @@
       "name": "OpenCV library", 
       "sort": 50,
       "tags": "lib,opencv,channel-stable"
+    },
+    "boost": {
+      "local": "yes", 
+      "name": "Boost library", 
+      "sort": 60,
+      "tags": "lib,boost,channel-stable",
+      "version_from": [
+        1,
+        41,
+        0
+      ]
     }
   }, 
   "data_name": "mlperf-inference-v0.5", 
   "extra_ld_vars": "", 
-  "main_language": "c", 
+  "main_language": "cpp", 
   "print_files_after_run": [
     "stderr.log", 
     "stdout.log"
