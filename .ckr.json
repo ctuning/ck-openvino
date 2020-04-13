@@ -4,6 +4,11 @@
   "data_alias": "ck-openvino",
   "data_name": "ck-openvino",
   "dict": {
+    "repo_deps": [
+      {
+        "repo_uoa": "ck-mlperf"
+      }
+    ],
     "shared": "git",
     "url": "https://github.com/ctuning/ck-openvino"
   }
