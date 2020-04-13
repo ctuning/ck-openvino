@@ -25,7 +25,7 @@
       "name": "CMake tool",
       "version_from": [
         3,
-        7
+        0
       ],
       "skip_from_bat": "yes",
       "sort": 20,
