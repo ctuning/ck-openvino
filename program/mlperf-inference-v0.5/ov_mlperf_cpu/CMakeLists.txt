@@ -30,7 +30,7 @@ if (NOT(OPENCV_DIR))
     MESSAGE(FATAL_ERROR "OPENCV_DIR unspecified. Use -DOPENCV_DIR=/path/to/ck/opencv")
 endif()
 MESSAGE(STATUS "OPENCV_DIR=${OPENCV_DIR}")
-find_package(OpenCV REQUIRED PATHS ${OPENCV_DIR})
+find_package(OpenCV REQUIRED PATHS ${OPENCV_DIR} NO_DEFAULT_PATH)
 
 # OpenVINO Inference Engine.
 if (NOT(OPENVINO_DIR))
