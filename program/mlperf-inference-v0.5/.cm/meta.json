@@ -63,6 +63,9 @@
     "custom": {
       "ignore_return_code": "no", 
       "run_time": {
+        "pre_process_via_ck": {
+            "script_name": "ck_preprocess"
+	},
         "run_cmd_main": "$#BIN_FILE#$ --scenario ${CK_LOADGEN_SCENARIO} --mode ${CK_LOADGEN_MODE} --mlperf_conf_filename ${CK_LOADGEN_MLPERF_CONF} --user_conf_filename ${CK_LOADGEN_USER_CONF} --total_sample_count ${CK_LOADGEN_DATASET_SIZE} --data_path ${CK_ENV_DATASET_COCO} --dataset ${CK_ENV_DATASET_TYPE} --device ${CK_OPENVINO_DEVICE} --model_path ${CK_ENV_OPENVINO_MODEL_XML} --model_name ${CK_OPENVINO_MODEL_NAME} --nireq ${CK_OPENVINO_NIREQ} --nstreams ${CK_OPENVINO_NSTREAMS} --nthreads ${CK_OPENVINO_NTHREADS} --nwarmup_iters ${CK_OPENVINO_NWARMUP_ITERS} --batch_size ${CK_BATCH_SIZE}",
         "run_cmd_out1": "stdout.log", 
         "run_cmd_out2": "stderr.log", 
