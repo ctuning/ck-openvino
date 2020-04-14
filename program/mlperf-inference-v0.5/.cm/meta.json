@@ -68,7 +68,7 @@
           "script_name": "ck_preprocess"
         },
         "post_process_via_ck": {
-          "data_uoa": "b98ee24399ef4c3a",
+          "data_uoa": "24c98b0cee248d93",
           "module_uoa": "script",
           "script_name": "loadgen_postprocess"
         },
@@ -214,22 +214,84 @@
     }
   }, 
   "run_deps": {
-    "images": {
-      "force_target_as_host": "yes",
-      "local": "yes",
-      "name": "COCO 2017 dataset (original)",
-      "sort": 100,
-      "tags": "dataset,coco,2017,val,original"
-    },
     "weights": {
       "force_target_as_host": "yes",
       "local": "yes",
       "name": "OpenVINO model",
       "sort": 110,
       "tags": "model,openvino"
+    },
+    "mlperf-inference-src": {
+      "enable_if_env": [
+        { "CK_LOADGEN_MODE": ["Accuracy", "accuracy", "Performance_"] }
+      ],
+      "local": "yes",
+      "name": "MLPerf Inference source",
+      "sort": 120,
+      "tags": "mlperf,inference,source"
+    },
+    "python": {
+      "enable_if_env": [
+        { "CK_LOADGEN_MODE": ["Accuracy", "accuracy", "Performance_"] }
+      ],
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "Python interpreter",
+      "sort": 130,
+      "tags": "compiler,lang-python"
+    },
+    "lib-python-numpy": {
+      "enable_if_env": [
+        { "CK_LOADGEN_MODE": ["Accuracy", "accuracy", "Performance_"] }
+      ],
+      "local": "yes",
+      "name": "Python NumPy library",
+      "sort": 140,
+      "tags": "lib,python-package,numpy"
+    },
+    "dataset": {
+      "enable_if_env": [
+        { "CK_LOADGEN_TASK": ["object-detection"] }
+      ],
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "COCO 2017 dataset (original)",
+      "sort": 200,
+      "tags": "dataset,coco,2017,val,original"
+    },
+    "lib-python-matplotlib": {
+      "enable_if_env": [
+        { "CK_LOADGEN_TASK": ["object-detection"],
+          "CK_LOADGEN_MODE": ["Accuracy", "accuracy", "Performance_"] }
+      ],
+      "local": "yes",
+      "name": "Python Matplotlib library",
+      "sort": 210,
+      "tags": "lib,python-package,matplotlib"
+    },
+    "tool-coco": {
+      "enable_if_env": [
+        { "CK_LOADGEN_TASK": ["object-detection"],
+          "CK_LOADGEN_MODE": ["Accuracy", "accuracy", "Performance_"] }
+      ],
+      "local": "yes",
+      "name": "Python API for COCO",
+      "sort": 220,
+      "tags": "tool,coco"
+    },
+    "imagenet-aux": {
+      "enable_if_env": [
+        { "CK_LOADGEN_TASK": ["image-classification"],
+          "CK_LOADGEN_MODE": ["Accuracy", "accuracy", "Performance_"] }
+      ],
+      "local": "yes",
+      "name": "ImageNet labels",
+      "sort": 300,
+      "tags": "dataset,imagenet,aux"
     }
   },
   "run_vars": {
+    "CK_LOADGEN_TASK"           : "object-detection",
     "CK_LOADGEN_SCENARIO"       : "Offline",
     "CK_LOADGEN_MODE"           : "Performance",
     "CK_LOADGEN_MLPERF_CONF"    : "../mlperf.conf",
