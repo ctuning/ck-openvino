@@ -81,7 +81,11 @@
       "local": "yes", 
       "name": "Original TensorFlow model", 
       "sort": 5, 
-      "tags": "model,tf"
+      "tags": "model,tf",
+      "update_tags_if_env" : {
+        "ssd-mobilenet": [ { "_MODEL_TO_CONVERT": "tf2ov_ssd_mobilenet" } ],
+        "resnet50": [ { "_MODEL_TO_CONVERT": "resnet50" } ]
+      }
     },
     "python": {
       "local": "yes", 
