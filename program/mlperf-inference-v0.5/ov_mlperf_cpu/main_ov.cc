@@ -194,25 +194,25 @@ int main(int argc, char **argv) {
         image_height = 224;
         image_width = 224;
         num_channels = 3;
-        total_sample_count = 50000;
+        if (total_sample_count == 0) total_sample_count = 50000;
     } else if (workload.compare("mobilenet") == 0) {
         image_format = "NCHW";
         image_height = 224;
         image_width = 224;
         num_channels = 3;
-        total_sample_count = 50000;
+        if (total_sample_count == 0) total_sample_count = 50000;
     } else if (workload.compare("ssd-mobilenet") == 0) {
         image_format = "NCHW";
         image_height = 300;
         image_width = 300;
         num_channels = 3;
-        total_sample_count = 5000;
+        if (total_sample_count == 0) total_sample_count = 5000;
     } else if (workload.compare("ssd-resnet34") == 0) {
         image_format = "NCHW";
         image_height = 1200;
         image_width = 1200;
         num_channels = 3;
-        total_sample_count = 5000;
+        if (total_sample_count == 0) total_sample_count = 5000;
     }
 
     // Init SUT

@@ -81,6 +81,7 @@
         ]
       },
       "run_vars": {
+        "CK_LOADGEN_DATASET_SIZE"   : 500,
         "CK_LOADGEN_SCENARIO"       : "Offline",
         "CK_LOADGEN_MODE"           : "Performance",
         "CK_LOADGEN_MLPERF_CONF"    : "../mlperf.conf",
