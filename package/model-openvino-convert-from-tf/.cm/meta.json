@@ -11,6 +11,18 @@
     "skip_file_check": "yes"
   }, 
   "deps": {
+    "imagenet-aux": {
+      "local": "yes", 
+      "name": "ImageNet labels", 
+      "sort": 100, 
+      "tags": "dataset,imagenet,aux"
+    }, 
+    "imagenet-val": {
+      "local": "yes", 
+      "name": "ImageNet validation dataset", 
+      "sort": 110, 
+      "tags": "dataset,imagenet,val,original"
+    }, 
     "lib-openvino": {
       "add_to_path": "yes",
       "local": "yes", 
