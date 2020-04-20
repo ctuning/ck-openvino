@@ -119,6 +119,9 @@
       "extra_env": {
         "_MODEL_TO_CONVERT": "tf2ov_ssd_mobilenet"
       }, 
+      "extra_tags": [
+        "object-detection"
+      ],
       "on_by_default": "yes"
     },
     "resnet50": {
@@ -128,6 +131,9 @@
       "extra_env": {
         "_MODEL_TO_CONVERT": "tf2ov_resnet50"
       }, 
+      "extra_tags": [
+        "image-classification"
+      ],
       "on_by_default": "no"
     }
   }
