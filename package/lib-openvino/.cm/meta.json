@@ -51,6 +51,22 @@
       "sort": 50,
       "tags": "lib,opencv",
       "no_tags": "python-package"
+    },
+    "cython": {
+      "add_to_path": "no",
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "Cython compiler",
+      "sort": 60,
+      "tags": "python-package,cython"
+    },
+    "python": {
+      "add_to_path": "no",
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "Python interpreter",
+      "sort": 70,
+      "tags": "compiler,python"
     }
   },
   "end_full_path_universal": "lib/libinference_engine.so",

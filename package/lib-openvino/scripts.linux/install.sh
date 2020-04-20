@@ -58,6 +58,10 @@ ${CK_ENV_TOOL_CMAKE_BIN}/cmake \
   -DENABLE_CLDNN=OFF \
   -DENABLE_OPENCV=OFF \
   -DOpenCV_DIR="${CK_ENV_LIB_OPENCV}" \
+  -DENABLE_PYTHON=ON \
+  -DPYTHON_EXECUTABLE=${CK_ENV_COMPILER_PYTHON_FILE} \
+  -DPYTHON_INCLUDE_DIR=$(${CK_ENV_COMPILER_PYTHON_FILE} -c "from distutils.sysconfig import get_config_var; print('{}'.format(get_config_var('INCLUDEPY')))") \
+  -DPYTHON_LIBRARY=$(${CK_ENV_COMPILER_PYTHON_FILE} -c "from distutils.sysconfig import get_config_var; print('{}/{}'.format(get_config_var('LIBDIR'), get_config_var('INSTSONAME')))") \
   "${SRC_DIR}"
 EO_CMK_CMD
 
