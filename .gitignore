@@ -1,2 +1,4 @@
 *.pyc
-program/*/tmp*
+__pycache__
+program/*/tmp/*
+package/model-openvino-convert-from-tf/*.yml
