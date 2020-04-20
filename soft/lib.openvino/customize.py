@@ -68,7 +68,7 @@ def setup(i):
 
     env=i['env']
     ep=cus['env_prefix']
-
+    env[ep+'_VERSION']     = cus['install_env'].get('PACKAGE_VERSION','')
     env[ep+'_IE_PATH']     = fp
     env[ep+'_IE_NAME']     = os.path.basename(fp)
     lib_dir                = os.path.dirname(fp)
@@ -81,6 +81,11 @@ def setup(i):
     env[ep+'_SRC_DIR']     = os.path.join(install_dir, 'dldt')
     env[ep+'_IE_DIR']      = os.path.join(install_dir, 'dldt', 'inference-engine')
     env[ep+'_MO_DIR']      = os.path.join(install_dir, 'dldt', 'model-optimizer')
-    env[ep+'_VERSION']     = cus['install_env'].get('PACKAGE_VERSION','')
+    # Tools.
+    env[ep+'_IE_ACCURACY_CHECKER_TOOL_DIR'] = os.path.join(install_dir, 'dldt', 'inference-engine', 'tools', 'accuracy_checker_tool')
+    env[ep+'_ACCURACY_CHECK_PY'] = os.path.join(env[ep+'_IE_ACCURACY_CHECKER_TOOL_DIR'], 'accuracy_check.py')
+    env[ep+'_CONVERT_ANNOTATION_PY'] = os.path.join(env[ep+'_IE_ACCURACY_CHECKER_TOOL_DIR'], 'convert_annotation.py')
+    env[ep+'_IE_CALIBRATION_TOOL_DIR'] = os.path.join(install_dir, 'dldt', 'inference-engine', 'tools', 'calibration_tool')
+    env[ep+'_CALIBRATE_PY'] = os.path.join(env[ep+'_IE_CALIBRATION_TOOL_DIR'], 'calibrate.py')
 
     return {'return':0, 'bat':s}
