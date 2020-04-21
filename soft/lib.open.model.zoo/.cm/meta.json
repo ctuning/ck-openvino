@@ -1,0 +1,23 @@
+{
+  "auto_detect": "yes",
+  "customize": {
+    "check_that_exists": "yes",
+    "env_prefix": "CK_ENV_LIB_OPEN_MODEL_ZOO",
+    "limit_recursion_dir_search": {
+      "linux": 2
+    },
+    "soft_file": {
+      "linux": "detection_analyzer.py"
+    },
+    "soft_path_example": {
+      "linux": ""
+    }
+  },
+  "soft_name": "Open Model Zoo repository",
+  "tags": [
+    "lib",
+    "openvino",
+    "open-model-zoo",
+    "intel"
+  ]
+}
