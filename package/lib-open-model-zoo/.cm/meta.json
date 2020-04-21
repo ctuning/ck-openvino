@@ -1,0 +1,65 @@
+{
+  "check_exit_status": "yes", 
+  "customize": {
+    "extra_dir": "", 
+    "install_env": {
+      "PACKAGE_URL": "https://github.com/opencv/open_model_zoo/archive/",
+      "PACKAGE_UNZIP": "YES",
+      "PACKAGE_WGET": "YES",
+      "PACKAGE_BUILD_TYPE": "none",
+      "PACKAGE_SKIP_LINUX_MAKE": "YES"
+    }
+  }, 
+  "deps": {
+    "lib-openvino": {
+      "add_to_path": "yes",
+      "local": "yes", 
+      "name": "OpenVINO toolkit", 
+      "sort": 10, 
+      "tags": "lib,openvino"
+    }
+  }, 
+  "process_script": "install",
+  "soft_uoa": "21dd86a4c0ab3f11",
+  "suggested_path": "lib-open-model-zoo",
+  "tags": [
+    "lib",
+    "openvino",
+    "open-model-zoo",
+    "intel"
+  ], 
+  "use_scripts_from_another_entry": {
+    "data_uoa": "cd9ccc74060b3d18",
+    "module_uoa": "script"
+  },
+  "variations": {
+    "2019_R3.1": {
+      "extra_env": {
+      "PACKAGE_NAME": "2019_R3.1.zip",
+      "PACKAGE_SUB_DIR": "open_model_zoo-2019_R3.1"
+      },
+      "extra_customize": {
+        "version": "2019_R3.1"
+      },
+      "on_by_default": "yes"
+    },
+    "2020.1": {
+      "extra_env": {
+      "PACKAGE_NAME": "2020.1.zip",
+      "PACKAGE_SUB_DIR": "open_model_zoo-2020.1"
+      },
+      "extra_customize": {
+        "version": "2020.1"
+      }
+    },
+    "2020.2": {
+      "extra_env": {
+      "PACKAGE_NAME": "2020.2.zip",
+      "PACKAGE_SUB_DIR": "open_model_zoo-2020.2"
+      },
+      "extra_customize": {
+        "version": "2020.2"
+      }
+    }
+  }
+}
