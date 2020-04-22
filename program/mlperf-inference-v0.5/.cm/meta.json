@@ -30,7 +30,7 @@
       "name": "OpenVINO toolkit", 
       "sort": 40,
       "tags": "lib,openvino",
-      "or_tags": "pre-release;2019_R3.1"
+      "or_tags": "pre-release;2019_R3.1;2019_R3"
     },
     "opencv": {
       "local": "yes", 
