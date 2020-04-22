@@ -308,7 +308,7 @@
       "sort": 200,
       "tags": "dataset,coco,2017,val,original"
     },
-    "dataset": {
+    "dataset-imagenet": {
       "enable_if_env": [
         { "CK_LOADGEN_TASK": ["image-classification"] }
       ],
