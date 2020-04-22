@@ -13,6 +13,24 @@ else
   REVERSE_INPUT_CHANNELS=""
 fi
 
+
+# This should be moved into the install script for lib.openvino
+CALIBRATION_TOOL_PATH=${CK_ENV_LIB_OPENVINO}/dldt/inference-engine/tools/calibration_tool/openvino
+INFERENCE_ENGINE_PATH=${CK_ENV_LIB_OPENVINO}/dldt/inference-engine/bin/intel64/Release/lib/python_api/${CK_PYTHON_BIN}/openvino/
+DLDT_TOOLS_PATH=${CK_ENV_LIB_OPENVINO}/dldt/
+if [ ! -d "$CALIBRATION_TOOL_PATH" ]; then
+  mkdir ${CALIBRATION_TOOL_PATH}
+  ln -s ${INFERENCE_ENGINE_PATH}/inference_engine/ ${CALIBRATION_TOOL_PATH}/inference_engine
+  ln -s ${DLDT_TOOLS_PATH}/tools/ ${CALIBRATION_TOOL_PATH}/tools
+  ln -s ${INFERENCE_ENGINE_PATH}/tools/statistics_collector ${CALIBRATION_TOOL_PATH}/tools/statistics_collector
+fi
+
+
+echo ""
+echo "######################################################################################"
+echo "Converting TensorFlow model to OpenVINO format..."
+echo ""
+
 read -d '' CMD <<END_OF_CMD
 ${CK_ENV_COMPILER_PYTHON_FILE} \
   ${CK_ENV_LIB_OPENVINO_MO_DIR}/mo.py \
@@ -25,5 +43,62 @@ END_OF_CMD
 
 echo ${CMD}
 eval ${CMD}
+
+if [ "${?}" != "0" ] ; then
+  echo "Error: Conversion to OpenVINO format failed!"
+  exit 1
+fi
+
+
+VAL_FILE=`basename ${CK_CAFFE_IMAGENET_VAL_TXT}`
+head -n500 ${CK_CAFFE_IMAGENET_VAL_TXT} > ${INSTALL_DIR}/${VAL_FILE}
+
+echo ""
+echo "######################################################################################"
+echo "Running convert annotation..."
+echo ""
+
+read -d '' CMD <<END_OF_CMD
+${CK_ENV_COMPILER_PYTHON_FILE} \
+  ${CK_ENV_LIB_OPENVINO_CONVERT_ANNOTATION_PY} \
+  imagenet \
+  --annotation_file ${INSTALL_DIR}/${VAL_FILE} \
+  --labels_file ${CK_CAFFE_IMAGENET_SYNSET_WORDS_TXT} \
+  --has_background True \
+  --output_dir ${INSTALL_DIR}
+END_OF_CMD
+
+echo ${CMD}
+eval ${CMD}
+
+if [ "${?}" != "0" ] ; then
+  echo "Error: Convert annotation failed!"
+  exit 1
+fi
+
+
+echo ""
+echo "######################################################################################"
+echo "Running calibration..."
+echo ""
+
+read -d '' CMD <<END_OF_CMD
+LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${CK_ENV_LIB_OPENVINO}/lib/ ; \
+${CK_ENV_COMPILER_PYTHON_FILE} \
+  ${CK_ENV_LIB_OPENVINO_CALIBRATE_PY} \
+  -c ${INSTALL_DIR}/config.yml \
+  -M ${CK_ENV_LIB_OPENVINO_MO_DIR} \
+  -C ${INSTALL_DIR} \
+  -e ${CK_ENV_LIB_OPENVINO}/lib/ \
+  --output_dir ${INSTALL_DIR}
+END_OF_CMD
+
+echo ${CMD}
+eval ${CMD}
+
+if [ "${?}" != "0" ] ; then
+  echo "Error: Calibration failed!"
+  exit 1
+fi
 
 echo "Done."
