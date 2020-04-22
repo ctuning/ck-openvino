@@ -108,16 +108,37 @@
 	"v0.5-intel"
       ]
     },
+    "2019_R3": {
+      "extra_env": {
+        "PACKAGE_GIT_CHECKOUT": "2019_R3"
+      },
+      "extra_customize": {
+        "version": "2019_R3"
+      }
+    },
     "2019_R3.1": {
       "extra_env": {
         "PACKAGE_GIT_CHECKOUT": "2019_R3.1"
       },
       "extra_customize": {
         "version": "2019_R3.1"
+      }
+    },
+    "2020.1": {
+      "extra_env": {
+        "PACKAGE_GIT_CHECKOUT": "2020.1"
       },
-      "extra_tags": [
-        "for.mlperf-inference-v0.5"
-      ]
+      "extra_customize": {
+        "version": "2020.1"
+      }
+    },
+    "2020.2": {
+      "extra_env": {
+        "PACKAGE_GIT_CHECKOUT": "2020.2"
+      },
+      "extra_customize": {
+        "version": "2020.2"
+      }
     },
     "2020": {
       "extra_env": {
