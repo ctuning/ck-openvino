@@ -20,7 +20,7 @@ function exit_if_error() {
 }
 
 export DLDT_DIR=${INSTALL_DIR}/dldt
-if [ "${PACKAGE_GIT_CHECKOUT}" == "2019_R3.1" ]; then
+if [ "${PACKAGE_GIT_CHECKOUT}" == "2019_R3.1" ] || [ "${PACKAGE_GIT_CHECKOUT}" == "pre-release" ]; then
   export SRC_DIR=${DLDT_DIR}/inference-engine
 else
   export SRC_DIR=${DLDT_DIR}

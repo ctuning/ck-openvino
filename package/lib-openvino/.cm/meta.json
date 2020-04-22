@@ -96,6 +96,18 @@
         "vmaster"
       ]
     },
+    "pre-release": {
+      "extra_env": {
+        "PACKAGE_GIT_CHECKOUT": "pre-release"
+      },
+      "extra_customize": {
+        "version": "pre-release"
+      },
+      "extra_tags": [
+        "vpre-release",
+	"v0.5-intel"
+      ]
+    },
     "2019_R3.1": {
       "extra_env": {
         "PACKAGE_GIT_CHECKOUT": "2019_R3.1"
