@@ -8,6 +8,7 @@ import os
 import sys
 import json
 from pprint import pprint
+from pathlib import Path
 
 ################################################################################
 # OpenVINO configuration file template.
@@ -22,18 +23,18 @@ models:
         tf_model: %(tf_model)s
         adapter: classification
         mo_params:
-          data_type: FP32 (or FP16)
+          data_type: FP32
           input_shape: (%(batch_size)d, %(height)d, %(width)d, %(channels)d)
           output: %(output)s
         cpu_extensions: AUTO
     datasets:
       - name: ImageNet2012_bkgr
         data_source: %(data_source)s
-        annotation: </path/to/mlperf_list_1/imagenet.pickle>
-        dataset_meta: </path/to/mlperf_list_1/imagenet.json>
+        annotation: %(install_path)s/imagenet.pickle
+        dataset_meta: %(install_path)s/imagenet.json
         annotation_conversion:
           converter: imagenet
-          annotation_file: %(annotation_file)s
+          annotation_file: %(install_path)s/val.txt
           labels_file: %(labels_file)s
           has_background: True
         subsample_size: 500
@@ -49,14 +50,12 @@ models:
           - name: accuracy @ top1
             type: accuracy
             top_k: 1
-          - name: accuracy @ top5
-            type: accuracy
-            top_k: 5
 '''
 
 def get_config_file(i):
     ck=i['ck_kernel']
     deps=i['deps']
+    install_path = i['install_path']
 
     model_env = deps['model-source']['dict']['env']
     [ mean_r, mean_g, mean_b ] = [ int(float(mean_str)+0.5) for mean_str in model_env['ML_MODEL_GIVEN_CHANNEL_MEANS'].split() ]
@@ -77,7 +76,8 @@ def get_config_file(i):
         "mean_b"          : mean_b,
         "data_source"     : val_env['CK_ENV_DATASET_IMAGENET_VAL'],
         "labels_file"     : aux_env['CK_CAFFE_IMAGENET_SYNSET_WORDS_TXT'],
-        "annotation_file" : aux_env['CK_CAFFE_IMAGENET_VAL_TXT']
+        "annotation_file" : aux_env['CK_CAFFE_IMAGENET_VAL_TXT'],
+        "install_path"    : install_path
     }
 
 ################################################################################
@@ -126,6 +126,7 @@ def setup(i):
 
     # Get variables
     o=i.get('out','')
+    ip=i.get('install_path','')
 
     ck=i['ck_kernel']
 
@@ -145,7 +146,9 @@ def setup(i):
     install_env = i['cfg']['customize']['install_env']
     if install_env.get('CK_CALIBRATE_IMAGENET', '') != '':
         config_file = get_config_file(i)
-        with open("config.yml", "w") as config_yml:
+        Path(ip).mkdir(parents=True, exist_ok=True)
+        filename=ip + "/config.yml"
+        with open(filename, "w") as config_yml:
             ck.out(config_file)
             config_yml.write(config_file)
     
