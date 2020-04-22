@@ -29,7 +29,8 @@
       "local": "yes", 
       "name": "OpenVINO toolkit", 
       "sort": 40,
-      "tags": "lib,openvino,2019_R3.1"
+      "tags": "lib,openvino",
+      "or_tags": "pre-release;2019_R3.1"
     },
     "opencv": {
       "local": "yes", 
@@ -115,6 +116,7 @@
         ]
       },
       "run_vars": {
+        "CK_LOADGEN_TASK"           : "object-detection",
         "CK_LOADGEN_SCENARIO"       : "Offline",
         "CK_LOADGEN_MODE"           : "Performance",
         "CK_LOADGEN_MLPERF_CONF"    : "../mlperf.conf",
@@ -139,6 +141,7 @@
         ]
       },
       "run_vars": {
+        "CK_LOADGEN_TASK"           : "object-detection",
         "CK_LOADGEN_SCENARIO"       : "Offline",
         "CK_LOADGEN_MODE"           : "Performance",
         "CK_OPENVINO_NIREQ"         : 112,
@@ -159,6 +162,7 @@
         ]
       },
       "run_vars": {
+        "CK_LOADGEN_TASK"           : "object-detection",
         "CK_LOADGEN_SCENARIO"       : "Offline",
         "CK_LOADGEN_MODE"           : "Accuracy",
         "CK_OPENVINO_NIREQ"         : 112,
@@ -179,6 +183,7 @@
         ]
       },
       "run_vars": {
+        "CK_LOADGEN_TASK"           : "object-detection",
         "CK_LOADGEN_SCENARIO"       : "Server",
         "CK_LOADGEN_MODE"           : "Performance",
         "CK_OPENVINO_NIREQ"         : 112,
@@ -199,6 +204,7 @@
         ]
       },
       "run_vars": {
+        "CK_LOADGEN_TASK"           : "object-detection",
         "CK_LOADGEN_SCENARIO"       : "Server",
         "CK_LOADGEN_MODE"           : "Accuracy",
         "CK_OPENVINO_NIREQ"         : 112,
@@ -219,6 +225,7 @@
         ]
       },
       "run_vars": {
+        "CK_LOADGEN_TASK"           : "object-detection",
         "CK_LOADGEN_SCENARIO"       : "SingleStream",
         "CK_LOADGEN_MODE"           : "Performance",
         "CK_OPENVINO_NIREQ"         : 1,
@@ -239,6 +246,7 @@
         ]
       },
       "run_vars": {
+        "CK_LOADGEN_TASK"           : "object-detection",
         "CK_LOADGEN_SCENARIO"       : "SingleStream",
         "CK_LOADGEN_MODE"           : "Accuracy",
         "CK_OPENVINO_NIREQ"         : 1,
@@ -353,7 +361,7 @@
     "CK_OPENVINO_NTHREADS"      : 112,
     "CK_OPENVINO_NWARMUP_ITERS" : 1000,
     "CK_BATCH_SIZE"             : 1
-  }, 
+  },
   "target_file": "Release/ov_mlperf",
   "skip_bin_ext": "yes",
   "tags": [
