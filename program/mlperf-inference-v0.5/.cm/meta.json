@@ -317,8 +317,8 @@
       "name": "ImageNet 2012 validation dataset (original)",
       "sort": 200,
       "tags": "dataset,imagenet,2012,val,original"
-   },
-   "lib-python-matplotlib": {
+    },
+    "lib-python-matplotlib": {
       "enable_if_env": [
         { "CK_LOADGEN_TASK": ["object-detection"],
           "CK_LOADGEN_MODE": ["Accuracy", "accuracy", "Performance_"] }
