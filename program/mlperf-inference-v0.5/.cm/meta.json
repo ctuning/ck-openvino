@@ -95,7 +95,7 @@
         "CK_BATCH_SIZE"             : 1
       }
     },
-    "custom": {
+    "object-detection": {
       "ignore_return_code": "no", 
       "run_time": {
         "fine_grain_timer_file": "tmp-ck-timer.json",
