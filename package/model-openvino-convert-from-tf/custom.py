@@ -54,7 +54,7 @@ models:
             top_k: 5
 '''
 
-def configure(i):
+def get_config_file(i):
     ck=i['ck_kernel']
     deps=i['deps']
 
@@ -142,15 +142,11 @@ def setup(i):
     tname=tosd.get('ck_name','')    # win, linux
     tname2=tosd.get('ck_name2','')  # win, mingw, linux, android
 
-    p=i['path']
-
-    pi=i.get('install_path','')
-    ck.out('INSTALL_PATH='+pi)
-
-    config_file = configure(i)
-    ck.out(config_file)
-
-    with open("config.yml", "w") as config_yml:
-        config_yml.write(config_file)
+    install_env = i['cfg']['customize']['install_env']
+    if install_env.get('CK_CALIBRATE_IMAGENET', '') != '':
+        config_file = get_config_file(i)
+        with open("config.yml", "w") as config_yml:
+            ck.out(config_file)
+            config_yml.write(config_file)
     
     return {'return':0}

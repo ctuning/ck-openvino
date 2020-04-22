@@ -12,12 +12,18 @@
   }, 
   "deps": {
     "imagenet-aux": {
+      "enable_if_env": [
+        { "CK_CALIBRATE_IMAGENET": ["on", "ON", "yes", "YES", "true", "TRUE", "1"] }
+      ],
       "local": "yes", 
       "name": "ImageNet labels", 
       "sort": 100, 
       "tags": "dataset,imagenet,aux"
     }, 
     "imagenet-val": {
+      "enable_if_env": [
+        { "CK_CALIBRATE_IMAGENET": ["on", "ON", "yes", "YES", "true", "TRUE", "1"] }
+      ],
       "local": "yes", 
       "name": "ImageNet validation dataset", 
       "sort": 110, 
@@ -130,7 +136,7 @@
       }, 
       "extra_env": {
         "_MODEL_TO_CONVERT": "tf2ov_ssd_mobilenet"
-      }, 
+      },
       "extra_tags": [
         "object-detection"
       ],
@@ -141,8 +147,9 @@
         "package_name": "OpenVINO-from-TF model (ResNet50)"
       }, 
       "extra_env": {
-        "_MODEL_TO_CONVERT": "tf2ov_resnet50"
-      }, 
+        "_MODEL_TO_CONVERT": "tf2ov_resnet50",
+        "CK_CALIBRATE_IMAGENET": "yes"
+      },
       "extra_tags": [
         "image-classification"
       ],
