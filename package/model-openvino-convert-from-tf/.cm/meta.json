@@ -147,8 +147,9 @@
         "package_name": "OpenVINO-from-TF model (ResNet50)"
       }, 
       "extra_env": {
-        "_MODEL_TO_CONVERT": "tf2ov_resnet50",
-        "CK_CALIBRATE_IMAGENET": "yes"
+        "CK_CALIBRATE_IMAGENET": "yes",
+        "CK_MLPERF_ACCURACY_IMAGENET_TYPE": "int32",
+        "_MODEL_TO_CONVERT": "tf2ov_resnet50"
       },
       "extra_tags": [
         "image-classification"
