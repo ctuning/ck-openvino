@@ -100,4 +100,15 @@ echo "Copying the include files to '${INC_DIR}' ..."
 cp -r ${DLDT_DIR}/inference-engine/include/* ${INC_DIR}
 exit_if_error "copying the include files failed"
 
+# Set up the calibration tool.
+CALIBRATION_TOOL_PATH=${DLDT_DIR}/inference-engine/tools/calibration_tool/openvino
+INFERENCE_ENGINE_PATH=${DLDT_DIR}/inference-engine/bin/intel64/Release/lib/python_api/${CK_PYTHON_BIN}/openvino/
+DLDT_TOOLS_PATH=${DLDT_DIR}
+if [ ! -d "$CALIBRATION_TOOL_PATH" ]; then
+  mkdir ${CALIBRATION_TOOL_PATH}
+  ln -s ${INFERENCE_ENGINE_PATH}/inference_engine/ ${CALIBRATION_TOOL_PATH}/inference_engine
+  ln -s ${DLDT_TOOLS_PATH}/tools/ ${CALIBRATION_TOOL_PATH}/tools
+  ln -s ${INFERENCE_ENGINE_PATH}/tools/statistics_collector ${CALIBRATION_TOOL_PATH}/tools/statistics_collector
+fi
+
 return 0

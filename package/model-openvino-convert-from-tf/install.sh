@@ -14,18 +14,6 @@ else
 fi
 
 
-# This should be moved into the install script for lib.openvino
-CALIBRATION_TOOL_PATH=${CK_ENV_LIB_OPENVINO}/dldt/inference-engine/tools/calibration_tool/openvino
-INFERENCE_ENGINE_PATH=${CK_ENV_LIB_OPENVINO}/dldt/inference-engine/bin/intel64/Release/lib/python_api/${CK_PYTHON_BIN}/openvino/
-DLDT_TOOLS_PATH=${CK_ENV_LIB_OPENVINO}/dldt/
-if [ ! -d "$CALIBRATION_TOOL_PATH" ]; then
-  mkdir ${CALIBRATION_TOOL_PATH}
-  ln -s ${INFERENCE_ENGINE_PATH}/inference_engine/ ${CALIBRATION_TOOL_PATH}/inference_engine
-  ln -s ${DLDT_TOOLS_PATH}/tools/ ${CALIBRATION_TOOL_PATH}/tools
-  ln -s ${INFERENCE_ENGINE_PATH}/tools/statistics_collector ${CALIBRATION_TOOL_PATH}/tools/statistics_collector
-fi
-
-
 echo ""
 echo "######################################################################################"
 echo "Converting TensorFlow model to OpenVINO format..."
@@ -48,6 +36,7 @@ if [ "${?}" != "0" ] ; then
   echo "Error: Conversion to OpenVINO format failed!"
   exit 1
 fi
+
 
 if [ "${CK_CALIBRATE_IMAGENET}" != "yes" ]; then
   echo "Done."
