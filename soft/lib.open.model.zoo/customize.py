@@ -65,11 +65,11 @@ def setup(i):
     ep=cus['env_prefix']
 
     p1=os.path.dirname(fp)
-    pl=os.path.dirname(p1)
-    pi=os.path.dirname(pl)
-    pii=os.path.dirname(pi)
+    p2=os.path.dirname(p1)
+    p3=os.path.dirname(p2)
+    pi=os.path.dirname(p3)
 
-    env[ep]=p1
-    env["PYTHONPATH"]=p1+"/lib/:${PYTHONPATH}"
+    env[ep]=pi
+    env["PYTHONPATH"]=os.path.join(pi,'lib')+":${PYTHONPATH}"
 
     return {'return':0, 'bat':s}
