@@ -52,6 +52,14 @@
       "tags": "lib,opencv",
       "no_tags": "python-package"
     },
+    "open-model-zoo": {
+      "add_to_path": "no",
+      "force_target_as_host": "yes",
+      "local": "yes",
+      "name": "Open Model Zoo",
+      "sort": 55,
+      "tags": "lib,open-model-zoo"
+    },
     "cython": {
       "add_to_path": "no",
       "force_target_as_host": "yes",
