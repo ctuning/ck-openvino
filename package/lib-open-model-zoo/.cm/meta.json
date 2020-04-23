@@ -26,6 +26,9 @@
     "lib",
     "openvino",
     "open-model-zoo",
+    "model-zoo",
+    "model",
+    "zoo",
     "intel"
   ], 
   "use_scripts_from_another_entry": {
