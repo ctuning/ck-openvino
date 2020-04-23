@@ -29,12 +29,32 @@
       "sort": 110, 
       "tags": "dataset,imagenet,val,original"
     }, 
+    "lib-python-cv2": {
+      "enable_if_env": [
+        { "CK_CALIBRATE_IMAGENET": ["on", "ON", "yes", "YES", "true", "TRUE", "1"] }
+      ],
+      "local": "yes",
+      "name": "Python OpenCV library",
+      "sort": 120,
+      "tags": "lib,python-package,cv2"
+    },
+    "lib-open-model-zoo": {
+      "enable_if_env": [
+        { "CK_CALIBRATE_IMAGENET": ["on", "ON", "yes", "YES", "true", "TRUE", "1"] }
+      ],
+      "add_to_path": "no",
+      "local": "yes",
+      "name": "Open Model Zoo",
+      "sort": 130,
+      "tags": "lib,open-model-zoo"
+    },
     "lib-openvino": {
       "add_to_path": "yes",
       "local": "yes", 
       "name": "OpenVINO toolkit", 
       "sort": 10, 
-      "tags": "lib,openvino"
+      "tags": "lib,openvino",
+      "no_tags": "model-zoo"
     }, 
     "lib-python-numpy": {
       "local": "yes", 
