@@ -16,13 +16,13 @@ echo ""
 echo "Setting up Accuracy Checker."
 echo ""
 
-if [ "${PACKAGE_VERSION}" = "2019_R3.1" ] ; then
-read -d '' CMD <<END_OF_CMD
-  cd ${INSTALL_DIR}/open_model_zoo-2019_R3.1/tools/accuracy_checker/ ; \
-  ${CK_PYTHON_BIN} setup.py build ; \
-  rm -f ${INSTALL_DIR}/lib ; \
-  ln -s ${INSTALL_DIR}/open_model_zoo-2019_R3.1/tools/accuracy_checker/build/lib/ ${INSTALL_DIR}
+if [ "${PACKAGE_VERSION}" = "2019_R3.1" ] || [ "${PACKAGE_VERSION}" = "2019_R3" ]; then
 
+read -d '' CMD <<END_OF_CMD
+  cd ${INSTALL_DIR}/open_model_zoo-${PACKAGE_VERSION}/tools/accuracy_checker/ ; \
+  ${CK_PYTHON_BIN} ./setup.py build ; \
+  rm -f ${INSTALL_DIR}/lib ; \
+  ln -s ${INSTALL_DIR}/open_model_zoo-${PACKAGE_VERSION}/tools/accuracy_checker/build/lib/ ${INSTALL_DIR}
 END_OF_CMD
 
 echo ${CMD}
