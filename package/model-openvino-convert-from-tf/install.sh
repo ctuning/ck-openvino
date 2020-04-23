@@ -49,14 +49,18 @@ if [ "${?}" != "0" ] ; then
   exit 1
 fi
 
-
-VAL_FILE=`basename ${CK_CAFFE_IMAGENET_VAL_TXT}`
-head -n500 ${CK_CAFFE_IMAGENET_VAL_TXT} > ${INSTALL_DIR}/${VAL_FILE}
+if [ "${CK_CALIBRATE_IMAGENET}" != "yes" ]; then
+  echo "Done."
+  exit 0
+fi
 
 echo ""
 echo "######################################################################################"
-echo "Running convert annotation..."
+echo "Converting annotations ..."
 echo ""
+
+VAL_FILE=$(basename ${CK_CAFFE_IMAGENET_VAL_TXT})
+head -n500 ${CK_CAFFE_IMAGENET_VAL_TXT} > ${INSTALL_DIR}/${VAL_FILE}
 
 read -d '' CMD <<END_OF_CMD
 ${CK_ENV_COMPILER_PYTHON_FILE} \
@@ -72,14 +76,14 @@ echo ${CMD}
 eval ${CMD}
 
 if [ "${?}" != "0" ] ; then
-  echo "Error: Convert annotation failed!"
+  echo "Error: Converting annotations failed!"
   exit 1
 fi
 
 
 echo ""
 echo "######################################################################################"
-echo "Running calibration..."
+echo "Running calibration ..."
 echo ""
 
 read -d '' CMD <<END_OF_CMD
@@ -102,3 +106,4 @@ if [ "${?}" != "0" ] ; then
 fi
 
 echo "Done."
+exit 0
