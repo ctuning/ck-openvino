@@ -1,13 +1,14 @@
 #!/usr/bin/python
 
 #
-# Developer: Anton Lokhmotov, anton@dividiti.com
+# Developers:
+# - Anton Lokhmotov, anton@dividiti.com
+# - Gavin Simpson, gavin.s.simpson@gmail.com
 #
 
 import os
 import sys
 import json
-from pprint import pprint
 from pathlib import Path
 
 ################################################################################
@@ -146,10 +147,9 @@ def setup(i):
     install_env = i['cfg']['customize']['install_env']
     if install_env.get('CK_CALIBRATE_IMAGENET', '') != '':
         config_file = get_config_file(i)
+        ck.out(config_file)
         Path(ip).mkdir(parents=True, exist_ok=True)
-        filename=ip + "/config.yml"
-        with open(filename, "w") as config_yml:
-            ck.out(config_file)
+        with open(os.path.join(ip, 'config.yml'), 'w') as config_yml:
             config_yml.write(config_file)
     
     return {'return':0}
