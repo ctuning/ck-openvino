@@ -57,7 +57,7 @@ ${CK_ENV_TOOL_CMAKE_BIN}/cmake \
   -DENABLE_GNA=OFF \
   -DENABLE_CLDNN=OFF \
   -DENABLE_OPENCV=ON \
-  -DOpenCV_DIR="${CK_ENV_LIB_OPENCV}" \
+  -DOpenCV_DIR="${CK_ENV_LIB_OPENCV}/share/OpenCV" \
   -DENABLE_PYTHON=ON \
   -DPYTHON_EXECUTABLE=${CK_ENV_COMPILER_PYTHON_FILE} \
   -DPYTHON_INCLUDE_DIR=$(${CK_ENV_COMPILER_PYTHON_FILE} -c "from distutils.sysconfig import get_config_var; print('{}'.format(get_config_var('INCLUDEPY')))") \
