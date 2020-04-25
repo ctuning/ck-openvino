@@ -169,10 +169,14 @@
       "extra_env": {
         "CK_CALIBRATE_IMAGENET": "yes",
         "CK_MLPERF_ACCURACY_IMAGENET_TYPE": "int32",
+        "MODEL_NAME": "converted_model",
+        "MODEL_NAME_I8": "resnet50_v1_i8",
         "_MODEL_TO_CONVERT": "tf2ov_resnet50"
       },
       "extra_tags": [
-        "image-classification"
+        "image-classification",
+        "converted-by-openvino",
+        "calibrated-by-openvino"
       ],
       "on_by_default": "no"
     }

@@ -91,6 +91,20 @@ END_OF_CMD
     exit 1
   fi
 
+
+  echo ""
+  echo "######################################################################################"
+  echo "Renaming '${MODEL_NAME_I8}.{bin,xml}' to '${MODEL_NAME}.{bin,xml}' ..."
+  echo ""
+
+  mv ${MODEL_NAME_I8}.bin ${MODEL_NAME}.bin
+  mv ${MODEL_NAME_I8}.xml ${MODEL_NAME}.xml
+
+  if [ "${?}" != "0" ] ; then
+    echo "Error: Renaming failed!"
+    exit 1
+  fi
+
 fi # END OF if/else [ "${CK_CALIBRATE_IMAGENET}" != "yes" ]
 
 echo "Done."
