@@ -78,14 +78,14 @@ def setup(i):
     env[ep+'_LIB_DIR']     = os.path.join(install_dir, 'lib')
     env[ep+'_INCLUDE_DIR'] = os.path.join(install_dir, 'include')
     env[ep+'_OBJ_DIR']     = os.path.join(install_dir, 'obj')
-    env[ep+'_SRC_DIR']     = os.path.join(install_dir, 'dldt')
-    env[ep+'_IE_DIR']      = os.path.join(install_dir, 'dldt', 'inference-engine')
-    env[ep+'_MO_DIR']      = os.path.join(install_dir, 'dldt', 'model-optimizer')
+    env[ep+'_SRC_DIR']     = os.path.join(install_dir, 'openvino')
+    env[ep+'_IE_DIR']      = os.path.join(install_dir, 'openvino', 'inference-engine')
+    env[ep+'_MO_DIR']      = os.path.join(install_dir, 'openvino', 'model-optimizer')
     # Tools.
-    env[ep+'_IE_ACCURACY_CHECKER_TOOL_DIR'] = os.path.join(install_dir, 'dldt', 'inference-engine', 'tools', 'accuracy_checker_tool')
+    env[ep+'_IE_ACCURACY_CHECKER_TOOL_DIR'] = os.path.join(install_dir, 'openvino', 'inference-engine', 'tools', 'accuracy_checker_tool')
     env[ep+'_ACCURACY_CHECK_PY'] = os.path.join(env[ep+'_IE_ACCURACY_CHECKER_TOOL_DIR'], 'accuracy_check.py')
     env[ep+'_CONVERT_ANNOTATION_PY'] = os.path.join(env[ep+'_IE_ACCURACY_CHECKER_TOOL_DIR'], 'convert_annotation.py')
-    env[ep+'_IE_CALIBRATION_TOOL_DIR'] = os.path.join(install_dir, 'dldt', 'inference-engine', 'tools', 'calibration_tool')
+    env[ep+'_IE_CALIBRATION_TOOL_DIR'] = os.path.join(install_dir, 'openvino', 'inference-engine', 'tools', 'calibration_tool')
     env[ep+'_CALIBRATE_PY'] = os.path.join(env[ep+'_IE_CALIBRATION_TOOL_DIR'], 'calibrate.py')
 
     return {'return':0, 'bat':s}
