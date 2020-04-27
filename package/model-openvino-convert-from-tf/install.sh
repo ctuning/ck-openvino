@@ -54,7 +54,7 @@ else # END OF if [ "${CK_CALIBRATE_IMAGENET}" != "yes" ]
     imagenet \
     --annotation_file ${INSTALL_DIR}/${VAL_FILE} \
     --labels_file ${CK_CAFFE_IMAGENET_SYNSET_WORDS_TXT} \
-    --has_background True \
+    --has_background ${CK_OPENVINO_ANNOTATION_CONVERSION_HAS_BACKGROUND} \
     --output_dir ${INSTALL_DIR}
 END_OF_CMD
 

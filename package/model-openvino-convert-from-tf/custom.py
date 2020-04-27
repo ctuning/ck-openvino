@@ -38,7 +38,7 @@ models:
           converter: imagenet
           annotation_file: %(install_path)s/val.txt
           labels_file: %(labels_file)s
-          has_background: True
+          has_background: %(has_background)s
         subsample_size: 500
         preprocessing:
           - type: resize
@@ -82,6 +82,7 @@ def get_config_file(i):
         "height"             : int(model_env['CK_ENV_TENSORFLOW_MODEL_IMAGE_HEIGHT']),
         "width"              : int(model_env['CK_ENV_TENSORFLOW_MODEL_IMAGE_HEIGHT']),
         "channels"           : 3,
+        "has_background"     : install_env.get('CK_OPENVINO_ANNOTATION_CONVERSION_HAS_BACKGROUND','False'),
         "aspect_ratio_scale" : install_env.get('CK_OPENVINO_PREPROCESSING_ASPECT_RATIO_SCALE',''),
         "mean"               : mean,
         "std"                : std,
