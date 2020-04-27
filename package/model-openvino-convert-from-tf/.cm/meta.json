@@ -192,6 +192,7 @@
         "CK_CALIBRATE_IMAGENET": "yes",
         "CK_MLPERF_ACCURACY_IMAGENET_TYPE": "int32",
         "CK_OPENVINO_PREPROCESSING_ASPECT_RATIO_SCALE": "greater",
+        "CK_OPENVINO_PREPROCESSING_MEAN": "123 117 104",
         "MODEL_NAME": "converted_model",
         "MODEL_NAME_I8": "resnet50_v1_i8",
         "_MODEL_TO_CONVERT": "tf2ov_resnet50"

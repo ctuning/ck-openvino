@@ -9,6 +9,7 @@
 import os
 import sys
 import json
+import re
 from pathlib import Path
 
 ################################################################################
@@ -46,15 +47,12 @@ models:
           - type: crop
             size: 224
           - type: normalization
-            mean: %(mean_r)f, %(mean_g)f, %(mean_b)f
-            std: %(std)f
+            mean: %(mean)s
+            std: %(std)s
         metrics:
           - name: accuracy @ top1
             type: accuracy
             top_k: 1
-          - name: accuracy @ top5
-            type: accuracy
-            top_k: 5
 '''
 
 def get_config_file(i):
@@ -64,35 +62,33 @@ def get_config_file(i):
     install_env = i['cfg']['customize']['install_env']
 
     model_env = deps['model-source']['dict']['env']
-    if model_env.get('ML_MODEL_GIVEN_CHANNEL_MEANS','') != '':
-        [ mean_r, mean_g, mean_b ] = [ float(mean_str) for mean_str in model_env['ML_MODEL_GIVEN_CHANNEL_MEANS'].split() ]
-    elif install_env.get('CK_OPENVINO_GIVEN_CHANNEL_MEANS','') != '':
-        [ mean_r, mean_g, mean_b ] = [ float(mean_str) for mean_str in install_env['CK_OPENVINO_PREPROCESSING_MEAN'].split() ]
+    if install_env.get('CK_OPENVINO_PREPROCESSING_MEAN','') != '':
+        mean = re.sub("\s+", ",", install_env['CK_OPENVINO_PREPROCESSING_MEAN'].strip())
+    elif model_env.get('ML_MODEL_GIVEN_CHANNEL_MEANS','') != '':
+        mean = re.sub("\s+", ",", model_env['ML_MODEL_GIVEN_CHANNEL_MEANS'].strip())
     else:
-        [ mean_r, mean_g, mean_b ] = [ 0.0] * 3
-    std = float(install_env.get('CK_OPENVINO_PREPROCESSING_STD', '1.0'))
+        mean = ''
+    std = install_env.get('CK_OPENVINO_PREPROCESSING_STD', '')
  
     aux_env = deps['imagenet-aux']['dict']['env']
     val_env = deps['imagenet-val']['dict']['env']
 
     return template % {
-        "name"            : model_env['CK_ENV_TENSORFLOW_MODEL_NAME'],
-        "tf_model"        : model_env['CK_ENV_TENSORFLOW_MODEL_TF_FROZEN_FILEPATH'],
-        "output"          : model_env['CK_ENV_TENSORFLOW_MODEL_OUTPUT_LAYER_NAME'],
-        "data_type"       : install_env.get('CK_OPENVINO_MO_PARAMS_DATA_TYPE','FP32'),
-        "batch_size"      : 1,
-        "height"          : int(model_env['CK_ENV_TENSORFLOW_MODEL_IMAGE_HEIGHT']),
-        "width"           : int(model_env['CK_ENV_TENSORFLOW_MODEL_IMAGE_HEIGHT']),
-        "channels"        : 3,
-        "aspect_ratio_scale": install_env.get('CK_OPENVINO_PREPROCESSING_ASPECT_RATIO_SCALE',''),
-        "mean_r"          : mean_r,
-        "mean_g"          : mean_g,
-        "mean_b"          : mean_b,
-        "std"             : std,
-        "data_source"     : val_env['CK_ENV_DATASET_IMAGENET_VAL'],
-        "labels_file"     : aux_env['CK_CAFFE_IMAGENET_SYNSET_WORDS_TXT'],
-        "annotation_file" : aux_env['CK_CAFFE_IMAGENET_VAL_TXT'],
-        "install_path"    : install_path
+        "name"               : model_env['CK_ENV_TENSORFLOW_MODEL_NAME'],
+        "tf_model"           : model_env['CK_ENV_TENSORFLOW_MODEL_TF_FROZEN_FILEPATH'],
+        "output"             : model_env['CK_ENV_TENSORFLOW_MODEL_OUTPUT_LAYER_NAME'],
+        "data_type"          : install_env.get('CK_OPENVINO_MO_PARAMS_DATA_TYPE','FP32'),
+        "batch_size"         : 1,
+        "height"             : int(model_env['CK_ENV_TENSORFLOW_MODEL_IMAGE_HEIGHT']),
+        "width"              : int(model_env['CK_ENV_TENSORFLOW_MODEL_IMAGE_HEIGHT']),
+        "channels"           : 3,
+        "aspect_ratio_scale" : install_env.get('CK_OPENVINO_PREPROCESSING_ASPECT_RATIO_SCALE',''),
+        "mean"               : mean,
+        "std"                : std,
+        "data_source"        : val_env['CK_ENV_DATASET_IMAGENET_VAL'],
+        "labels_file"        : aux_env['CK_CAFFE_IMAGENET_SYNSET_WORDS_TXT'],
+        "annotation_file"    : aux_env['CK_CAFFE_IMAGENET_VAL_TXT'],
+        "install_path"       : install_path
     }
 
 ################################################################################
