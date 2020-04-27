@@ -39,7 +39,7 @@ mkdir -p ${OBJ_DIR} ${LIB_DIR} ${BIN_DIR} ${INC_DIR}
 # Python script to determine the path to the Python headers.
 read -d '' PYTHON_INCLUDE_DIR_SCRIPT <<END_OF_PYSTR
 from distutils.sysconfig import get_config_var; \
-print('{}'.format(get_config_var('INCLUDEPY')))"
+print('{}'.format(get_config_var('INCLUDEPY')))
 END_OF_PYSTR
 
 # Python script to determine the path to the Python library.
