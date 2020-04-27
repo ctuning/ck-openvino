@@ -41,7 +41,7 @@ set(OPENVINO_LIB_DIR               "${OPENVINO_DIR}/lib")
 set(OPENVINO_LIBRARY               "${OPENVINO_LIB_DIR}/libinference_engine.so")
 set(OPENVINO_CPU_EXTENSION_LIBRARY "${OPENVINO_LIB_DIR}/libcpu_extension.so")
 set(OPENVINO_INCLUDE_DIR           "${OPENVINO_DIR}/include")
-set(OPENVINO_EXTENSION_DIR         "${OPENVINO_DIR}/dldt/inference-engine/src/extension")
+set(OPENVINO_EXTENSION_DIR         "${OPENVINO_DIR}/openvino/inference-engine/src/extension")
 
 MESSAGE(STATUS "OPENVINO_DIR=${OPENVINO_DIR}")
 MESSAGE(STATUS "OPENVINO_LIB_DIR=${OPENVINO_LIB_DIR}")
