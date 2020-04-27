@@ -36,6 +36,21 @@ export INC_DIR=${INSTALL_DIR}/include
 rm -rf   ${OBJ_DIR} ${LIB_DIR} ${BIN_DIR} ${INC_DIR}
 mkdir -p ${OBJ_DIR} ${LIB_DIR} ${BIN_DIR} ${INC_DIR}
 
+# Python script to determine the path to the Python headers.
+read -d '' PYTHON_INCLUDE_DIR_SCRIPT <<END_OF_PYSTR
+from distutils.sysconfig import get_config_var; \
+print('{}'.format(get_config_var('INCLUDEPY')))"
+END_OF_PYSTR
+
+# Python script to determine the path to the Python library.
+read -d '' PYTHON_LIBRARY_SCRIPT <<END_OF_PYSTR
+from distutils.sysconfig import get_config_var; from os.path import sep; import os.path; \
+pth0 = get_config_var('LIBDIR') + sep + get_config_var('MULTIARCH') + sep + get_config_var('INSTSONAME') ; \
+pth1 = get_config_var('LIBDIR') + sep + get_config_var('INSTSONAME') ; \
+pth = pth0 if os.path.exists(pth0) else pth1 ; \
+print(pth)
+END_OF_PYSTR
+
 # Configure the package.
 read -d '' CMK_CMD <<EO_CMK_CMD
 ${CK_ENV_TOOL_CMAKE_BIN}/cmake \
@@ -60,8 +75,8 @@ ${CK_ENV_TOOL_CMAKE_BIN}/cmake \
   -DOpenCV_DIR="${CK_ENV_LIB_OPENCV}/share/OpenCV" \
   -DENABLE_PYTHON=ON \
   -DPYTHON_EXECUTABLE=${CK_ENV_COMPILER_PYTHON_FILE} \
-  -DPYTHON_INCLUDE_DIR=$(${CK_ENV_COMPILER_PYTHON_FILE} -c "from distutils.sysconfig import get_config_var; print('{}'.format(get_config_var('INCLUDEPY')))") \
-  -DPYTHON_LIBRARY=$(${CK_ENV_COMPILER_PYTHON_FILE} -c "from distutils.sysconfig import get_config_var; from os.path import sep; print('{}{}{}{}{}'.format(get_config_var('LIBDIR'), sep, get_config_var('MULTIARCH'), sep, get_config_var('INSTSONAME')))") \
+  -DPYTHON_INCLUDE_DIR=$(${CK_ENV_COMPILER_PYTHON_FILE} -c "${PYTHON_INCLUDE_DIR_SCRIPT}") \
+  -DPYTHON_LIBRARY=$(${CK_ENV_COMPILER_PYTHON_FILE} -c "${PYTHON_LIBRARY_SCRIPT}") \
   -DMKLDNN_WERROR=OFF \
   "${SRC_DIR}"
 EO_CMK_CMD
