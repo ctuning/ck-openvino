@@ -19,11 +19,11 @@ function exit_if_error() {
   fi
 }
 
-export DLDT_DIR=${INSTALL_DIR}/dldt
+export OPENVINO_DIR=${INSTALL_DIR}/openvino
 if [ "${PACKAGE_GIT_CHECKOUT}" == "2019_R3.1" ] || [ "${PACKAGE_GIT_CHECKOUT}" == "2019_R3" ] || [ "${PACKAGE_GIT_CHECKOUT}" == "pre-release" ]; then
-  export SRC_DIR=${DLDT_DIR}/inference-engine
+  export SRC_DIR=${OPENVINO_DIR}/inference-engine
 else
-  export SRC_DIR=${DLDT_DIR}
+  export SRC_DIR=${OPENVINO_DIR}
 fi
 
 # NB: Must be called 'obj' for make to work properly if PACKAGE_SKIP_LINUX_MAKE != "YES".
@@ -62,6 +62,7 @@ ${CK_ENV_TOOL_CMAKE_BIN}/cmake \
   -DPYTHON_EXECUTABLE=${CK_ENV_COMPILER_PYTHON_FILE} \
   -DPYTHON_INCLUDE_DIR=$(${CK_ENV_COMPILER_PYTHON_FILE} -c "from distutils.sysconfig import get_config_var; print('{}'.format(get_config_var('INCLUDEPY')))") \
   -DPYTHON_LIBRARY=$(${CK_ENV_COMPILER_PYTHON_FILE} -c "from distutils.sysconfig import get_config_var; from os.path import sep; print('{}{}{}{}{}'.format(get_config_var('LIBDIR'), sep, get_config_var('MULTIARCH'), sep, get_config_var('INSTSONAME')))") \
+  -DMKLDNN_WERROR=OFF \
   "${SRC_DIR}"
 EO_CMK_CMD
 
@@ -93,21 +94,21 @@ exit_if_error "copying the binaries failed"
 
 echo "Copying the libraries to '${LIB_DIR}' ..."
 cp ${SRC_DIR}/bin/intel64/Release/lib/* ${LIB_DIR}
-cp ${DLDT_DIR}/inference-engine/temp/omp/lib/libiomp*.so ${LIB_DIR}
+cp ${OPENVINO_DIR}/inference-engine/temp/omp/lib/libiomp*.so ${LIB_DIR}
 exit_if_error "copying the libraries failed"
 
 echo "Copying the include files to '${INC_DIR}' ..."
-cp -r ${DLDT_DIR}/inference-engine/include/* ${INC_DIR}
+cp -r ${OPENVINO_DIR}/inference-engine/include/* ${INC_DIR}
 exit_if_error "copying the include files failed"
 
 # Set up the calibration tool.
-CALIBRATION_TOOL_PATH=${DLDT_DIR}/inference-engine/tools/calibration_tool/openvino
-INFERENCE_ENGINE_PATH=${DLDT_DIR}/inference-engine/bin/intel64/Release/lib/python_api/${CK_PYTHON_BIN}/openvino/
-DLDT_TOOLS_PATH=${DLDT_DIR}
+CALIBRATION_TOOL_PATH=${OPENVINO_DIR}/inference-engine/tools/calibration_tool/openvino
+INFERENCE_ENGINE_PATH=${OPENVINO_DIR}/inference-engine/bin/intel64/Release/lib/python_api/${CK_PYTHON_BIN}/openvino/
+OPENVINO_TOOLS_PATH=${OPENVINO_DIR}
 if [ ! -d "$CALIBRATION_TOOL_PATH" ]; then
   mkdir ${CALIBRATION_TOOL_PATH}
   ln -s ${INFERENCE_ENGINE_PATH}/inference_engine/ ${CALIBRATION_TOOL_PATH}/inference_engine
-  ln -s ${DLDT_TOOLS_PATH}/tools/ ${CALIBRATION_TOOL_PATH}/tools
+  ln -s ${OPENVINO_TOOLS_PATH}/tools/ ${CALIBRATION_TOOL_PATH}/tools
   ln -s ${INFERENCE_ENGINE_PATH}/tools/statistics_collector ${CALIBRATION_TOOL_PATH}/tools/statistics_collector
 fi
 

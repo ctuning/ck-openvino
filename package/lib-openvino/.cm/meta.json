@@ -2,17 +2,17 @@
   "check_exit_status": "yes",
   "need_cpu_info": "yes",
   "customize": {
-    "git_src_dir": "dldt",
+    "git_src_dir": "openvino",
     "install_env": {
       "PACKAGE_BUILD_TYPE": "skip",
       "PACKAGE_GIT": "YES",
       "PACKAGE_GIT_SUBMODULES": "YES",
-      "PACKAGE_PATCH": "NO",
+      "PACKAGE_PATCH": "YES",
       "PACKAGE_SKIP_CLEAN_SRC_DIR": "YES",
       "PACKAGE_SKIP_CLEAN_OBJ": "YES",
       "PACKAGE_SKIP_LINUX_MAKE": "YES",
-      "PACKAGE_SUB_DIR": "dldt",
-      "PACKAGE_URL": "https://github.com/opencv/dldt"
+      "PACKAGE_SUB_DIR": "openvino",
+      "PACKAGE_URL": "https://github.com/openvinotoolkit/openvino"
     },
     "no_ver_in_suggested_path": "yes",
     "version": "master"
