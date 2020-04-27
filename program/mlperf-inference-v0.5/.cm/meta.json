@@ -88,7 +88,6 @@
         "CK_LOADGEN_MODE"           : "Performance",
         "CK_LOADGEN_MLPERF_CONF"    : "../mlperf.conf",
         "CK_LOADGEN_USER_CONF"      : "../user.conf.custom",
-        "CK_OPENVINO_MODEL_NAME"    : "resnet50",
         "CK_OPENVINO_NIREQ"         : 1,
         "CK_OPENVINO_NSTREAMS"      : 1,
         "CK_OPENVINO_NTHREADS"      : 1,
@@ -266,8 +265,12 @@
       "sort": 110,
       "tags": "model,openvino",
       "update_tags_if_env": {
-        "ssd-mobilenet": [ { "CK_LOADGEN_TASK": "object-detection"     } ],
-        "resnet50":      [ { "CK_LOADGEN_TASK": "image-classification" } ]
+        "mobilenet":     [ { "CK_LOADGEN_TASK": "image-classification",
+                             "CK_OPENVINO_MODEL_NAME": "mobilenet"     } ],
+        "resnet50":      [ { "CK_LOADGEN_TASK": "image-classification",
+                             "CK_OPENVINO_MODEL_NAME": "resnet50"      } ],
+        "ssd-mobilenet": [ { "CK_LOADGEN_TASK": "object-detection",
+                             "CK_OPENVINO_MODEL_NAME": "ssd-mobilenet" } ]
       }
     },
     "mlperf-inference-src": {
