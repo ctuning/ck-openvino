@@ -36,7 +36,7 @@ models:
         dataset_meta: %(install_path)s/imagenet.json
         annotation_conversion:
           converter: imagenet
-          annotation_file: %(install_path)s/val.txt
+          annotation_file: %(annotation_file)s
           labels_file: %(labels_file)s
           has_background: %(has_background)s
         subsample_size: 500
@@ -69,9 +69,11 @@ def get_config_file(i):
     else:
         mean = ''
     std = install_env.get('CK_OPENVINO_PREPROCESSING_STD', '')
- 
+
     aux_env = deps['imagenet-aux']['dict']['env']
-    val_env = deps['imagenet-val']['dict']['env']
+
+    dic_env = deps['dataset-imagenet-calibration']['dict']['env']
+    annotation_file = os.path.join(dic_env['CK_DATASET_IMAGENET_CALIBRATION_ROOT'], dic_env['CK_DATASET_IMAGENET_CALIBRATION_VAL_MAP_FILE'])
 
     return template % {
         "name"               : model_env['CK_ENV_TENSORFLOW_MODEL_NAME'],
@@ -86,9 +88,9 @@ def get_config_file(i):
         "aspect_ratio_scale" : install_env.get('CK_OPENVINO_PREPROCESSING_ASPECT_RATIO_SCALE',''),
         "mean"               : mean,
         "std"                : std,
-        "data_source"        : val_env['CK_ENV_DATASET_IMAGENET_VAL'],
+        "data_source"        : dic_env['CK_DATASET_IMAGENET_CALIBRATION_ROOT'],
         "labels_file"        : aux_env['CK_CAFFE_IMAGENET_SYNSET_WORDS_TXT'],
-        "annotation_file"    : aux_env['CK_CAFFE_IMAGENET_VAL_TXT'],
+        "annotation_file"    : annotation_file,
         "install_path"       : install_path
     }
 
