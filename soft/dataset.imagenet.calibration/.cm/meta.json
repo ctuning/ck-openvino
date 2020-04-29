@@ -6,12 +6,17 @@
     "env_prefix": "CK_DATASET_IMAGENET_CALIBRATION",
     "soft_file_universal": "*.xml"
   },
-  "soft_name": "OpenVINO ImageNet Calibration Data Set",
+  "soft_name": "ImageNet calibration dataset",
   "tags": [
     "dataset",
     "imagenet",
-    "calibration"
+    "calibration",
+    "cal",
+    "mlperf-inference",
+    "mlperf",
+    "inference",
+    "openvino"
   ],
   "template": "yes",
-  "template_type": "OpenVINO ImageNet Calibration Data Set"
+  "template_type": "ImageNet calibration dataset"
 }

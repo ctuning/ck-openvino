@@ -72,7 +72,7 @@ def get_config_file(i):
 
     aux_env = deps['imagenet-aux']['dict']['env']
 
-    dic_env = deps['dataset-imagenet-calibration']['dict']['env']
+    dic_env = deps['imagenet-cal']['dict']['env']
     annotation_file = os.path.join(dic_env['CK_DATASET_IMAGENET_CALIBRATION_ROOT'], dic_env['CK_DATASET_IMAGENET_CALIBRATION_VAL_MAP_FILE'])
 
     return template % {

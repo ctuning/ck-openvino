@@ -20,13 +20,13 @@
       "sort": 100, 
       "tags": "dataset,imagenet,aux"
     }, 
-    "dataset-imagenet-calibration": {
+    "imagenet-cal": {
       "enable_if_env": [
         { "CK_CALIBRATE_IMAGENET": ["on", "ON", "yes", "YES", "true", "TRUE", "1"] }
       ],
-      "local": "yes", 
-      "name": "OpenVINO ImageNet calibration dataset",
-      "sort": 110, 
+      "local": "yes",
+      "name": "ImageNet calibration dataset",
+      "sort": 110,
       "tags": "dataset,imagenet,calibration"
     }, 
     "lib-python-cv2": {
