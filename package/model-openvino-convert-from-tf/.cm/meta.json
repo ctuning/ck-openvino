@@ -24,6 +24,7 @@
       "enable_if_env": [
         { "CK_CALIBRATE_IMAGENET": ["on", "ON", "yes", "YES", "true", "TRUE", "1"] }
       ],
+      "add_to_path": "yes",
       "local": "yes",
       "name": "ImageNet calibration dataset",
       "sort": 110,

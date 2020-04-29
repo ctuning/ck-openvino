@@ -1,6 +1,6 @@
 # Convert TF models into OpenVINO format
 
-## Calibration prerequisites (ResNet50 variation only)
+## Calibration prerequisites (for the image classification variations only)
 
 ```bash
 $ python3.6 -m pip install --user \
