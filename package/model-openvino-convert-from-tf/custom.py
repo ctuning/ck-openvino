@@ -71,9 +71,7 @@ def get_config_file(i):
     std = install_env.get('CK_OPENVINO_PREPROCESSING_STD', '')
 
     aux_env = deps['imagenet-aux']['dict']['env']
-
-    dic_env = deps['imagenet-cal']['dict']['env']
-    annotation_file = os.path.join(dic_env['CK_DATASET_IMAGENET_CALIBRATION_ROOT'], dic_env['CK_DATASET_IMAGENET_CALIBRATION_VAL_MAP_FILE'])
+    imc_env = deps['imagenet-cal']['dict']['env']
 
     return template % {
         "name"               : model_env['CK_ENV_TENSORFLOW_MODEL_NAME'],
@@ -88,9 +86,9 @@ def get_config_file(i):
         "aspect_ratio_scale" : install_env.get('CK_OPENVINO_PREPROCESSING_ASPECT_RATIO_SCALE',''),
         "mean"               : mean,
         "std"                : std,
-        "data_source"        : dic_env['CK_DATASET_IMAGENET_CALIBRATION_ROOT'],
+        "data_source"        : imc_env['CK_DATASET_IMAGENET_CALIBRATION_ROOT'],
         "labels_file"        : aux_env['CK_CAFFE_IMAGENET_SYNSET_WORDS_TXT'],
-        "annotation_file"    : annotation_file,
+        "annotation_file"    : imc_env['CK_DATASET_IMAGENET_CALIBRATION_VAL_MAP_PATH'],
         "install_path"       : install_path
     }
 

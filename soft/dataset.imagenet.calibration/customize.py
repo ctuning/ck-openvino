@@ -58,10 +58,9 @@ def setup(i):
     install_root    = os.path.dirname(full_path)
     install_env     = cus.get('install_env', {})
     env_prefix      = cus['env_prefix']
-
     val_map         = install_env['CK_CALIBRATION_VAL_MAP_FILE']
 
     env[env_prefix + '_ROOT'] = install_root
-    env[env_prefix + '_VAL_MAP_FILE'] = val_map
+    env[env_prefix + '_VAL_MAP_PATH'] = os.path.join(install_root, val_map)
 
     return {'return':0, 'bat':''}
