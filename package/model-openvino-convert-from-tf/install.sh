@@ -45,13 +45,11 @@ else # END OF if [ "${CK_CALIBRATE_IMAGENET}" != "yes" ]
   echo "Converting annotations ..."
   echo ""
 
-  ANNOTATION_FILE=${CK_DATASET_IMAGENET_CALIBRATION_ROOT}/${CK_DATASET_IMAGENET_CALIBRATION_VAL_MAP_FILE}
-
   read -d '' CMD <<END_OF_CMD
   ${CK_ENV_COMPILER_PYTHON_FILE} \
     ${CK_ENV_LIB_OPENVINO_CONVERT_ANNOTATION_PY} \
     imagenet \
-    --annotation_file ${ANNOTATION_FILE} \
+    --annotation_file ${CK_DATASET_IMAGENET_CALIBRATION_VAL_MAP_PATH} \
     --labels_file ${CK_CAFFE_IMAGENET_SYNSET_WORDS_TXT} \
     --has_background ${CK_OPENVINO_ANNOTATION_CONVERSION_HAS_BACKGROUND} \
     --output_dir ${INSTALL_DIR}
