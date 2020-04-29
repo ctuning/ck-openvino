@@ -42,6 +42,9 @@ set(OPENVINO_LIBRARY               "${OPENVINO_LIB_DIR}/libinference_engine.so")
 set(OPENVINO_CPU_EXTENSION_LIBRARY "${OPENVINO_LIB_DIR}/libcpu_extension.so")
 set(OPENVINO_INCLUDE_DIR           "${OPENVINO_DIR}/include")
 set(OPENVINO_EXTENSION_DIR         "${OPENVINO_DIR}/openvino/inference-engine/src/extension")
+set(OPENVINO_MKLDNN_NODES_DIR      "${OPENVINO_DIR}/openvino/inference-engine/src/mkldnn_plugin/nodes")
+set(OPENVINO_THIRDPARTY_MKLDNN_SRC_CPU "${OPENVINO_DIR}/openvino/inference-engine/thirdparty/mkl-dnn/src/cpu")
+set(OPENVINO_THIRDPARTY_MKLDNN_SRC_COMMON "${OPENVINO_DIR}/openvino/inference-engine/thirdparty/mkl-dnn/src/common")
 
 MESSAGE(STATUS "OPENVINO_DIR=${OPENVINO_DIR}")
 MESSAGE(STATUS "OPENVINO_LIB_DIR=${OPENVINO_LIB_DIR}")
@@ -83,6 +86,9 @@ include_directories(
     ${LOADGEN_DIR}
     ${OPENVINO_INCLUDE_DIR}
     ${OPENVINO_EXTENSION_DIR}
+    ${OPENVINO_MKLDNN_NODES_DIR}
+    ${OPENVINO_THIRDPARTY_MKLDNN_SRC_CPU}
+    ${OPENVINO_THIRDPARTY_MKLDNN_SRC_COMMON}
 )
 
 set(SOURCE_FILES backend_ov.h dataset_ov.h sut_ov.h infer_request_wrap.h item_ov.h main_ov.cc)
