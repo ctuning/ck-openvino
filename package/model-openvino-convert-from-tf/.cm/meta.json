@@ -28,7 +28,8 @@
       "local": "yes",
       "name": "ImageNet calibration dataset",
       "sort": 110,
-      "tags": "dataset,imagenet,calibration"
+      "tags": "dataset,imagenet",
+      "or_tags": "cal;calibration"
     }, 
     "lib-python-cv2": {
       "enable_if_env": [
