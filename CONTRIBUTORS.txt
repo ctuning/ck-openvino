@@ -1,0 +1,7 @@
+N: Anton Lokhmotov
+E: anton@dividiti.com
+H: https://www.linkedin.com/in/lokhmotov
+
+N: Gavin Simpson
+E: gavin.s.simpson@gmail.com
+H: https://www.linkedin.com/in/gavinssimpson
