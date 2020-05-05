@@ -2,7 +2,7 @@
 
 ## MLPerf Inference v0.5 demo
 
-Download and run a [Docker image](https://hub.docker.com/repository/docker/ctuning/mlperf-inference-v0.5.openvino) built from reusable CK components:
+Download and run a [Docker image](https://hub.docker.com/r/ctuning/mlperf-inference-v0.5.openvino) built from reusable CK components:
 
 ```bash
 $ docker pull ctuning/mlperf-inference-v0.5.openvino:ubuntu-18.04
