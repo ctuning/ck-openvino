@@ -155,7 +155,8 @@
     },
     "2020.2": {
       "extra_env": {
-        "PACKAGE_GIT_CHECKOUT": "2020.2"
+        "PACKAGE_GIT_CHECKOUT": "2020.2",
+        "PACKAGE_PATCH__DISABLE_WERROR": "disable_werror_2020.2.patch"
       },
       "extra_customize": {
         "version": "2020.2"
@@ -179,7 +180,8 @@
     },
     "2020": {
       "extra_env": {
-        "PACKAGE_GIT_CHECKOUT": "2020"
+        "PACKAGE_GIT_CHECKOUT": "2020",
+        "PACKAGE_PATCH__DISABLE_WERROR": "disable_werror_2020.2.patch"
       },
       "extra_customize": {
         "version": "2020"

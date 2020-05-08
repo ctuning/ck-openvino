@@ -78,6 +78,7 @@ ${CK_ENV_TOOL_CMAKE_BIN}/cmake \
   -DPYTHON_INCLUDE_DIR=$(${CK_ENV_COMPILER_PYTHON_FILE} -c "${PYTHON_INCLUDE_DIR_SCRIPT}") \
   -DPYTHON_LIBRARY=$(${CK_ENV_COMPILER_PYTHON_FILE} -c "${PYTHON_LIBRARY_SCRIPT}") \
   -DMKLDNN_WERROR=OFF \
+  -DENABLE_MKL_DNN=ON \
   "${SRC_DIR}"
 EO_CMK_CMD
 
@@ -117,14 +118,14 @@ cp -r ${OPENVINO_DIR}/inference-engine/include/* ${INC_DIR}
 exit_if_error "copying the include files failed"
 
 # Set up the calibration tool.
-CALIBRATION_TOOL_PATH=${OPENVINO_DIR}/inference-engine/tools/calibration_tool/openvino
-INFERENCE_ENGINE_PATH=${OPENVINO_DIR}/inference-engine/bin/intel64/Release/lib/python_api/${CK_PYTHON_BIN}/openvino/
-OPENVINO_TOOLS_PATH=${OPENVINO_DIR}
-if [ ! -d "$CALIBRATION_TOOL_PATH" ]; then
-  mkdir ${CALIBRATION_TOOL_PATH}
-  ln -s ${INFERENCE_ENGINE_PATH}/inference_engine/ ${CALIBRATION_TOOL_PATH}/inference_engine
-  ln -s ${OPENVINO_TOOLS_PATH}/tools/ ${CALIBRATION_TOOL_PATH}/tools
-  ln -s ${INFERENCE_ENGINE_PATH}/tools/statistics_collector ${CALIBRATION_TOOL_PATH}/tools/statistics_collector
-fi
+#CALIBRATION_TOOL_PATH=${OPENVINO_DIR}/inference-engine/tools/calibration_tool/openvino
+#INFERENCE_ENGINE_PATH=${OPENVINO_DIR}/inference-engine/bin/intel64/Release/lib/python_api/${CK_PYTHON_BIN}/openvino/
+#OPENVINO_TOOLS_PATH=${OPENVINO_DIR}
+#if [ ! -d "$CALIBRATION_TOOL_PATH" ]; then
+#  mkdir ${CALIBRATION_TOOL_PATH}
+#  ln -s ${INFERENCE_ENGINE_PATH}/inference_engine/ ${CALIBRATION_TOOL_PATH}/inference_engine
+#  ln -s ${OPENVINO_TOOLS_PATH}/tools/ ${CALIBRATION_TOOL_PATH}/tools
+#  ln -s ${INFERENCE_ENGINE_PATH}/tools/statistics_collector ${CALIBRATION_TOOL_PATH}/tools/statistics_collector
+#fi
 
 return 0
