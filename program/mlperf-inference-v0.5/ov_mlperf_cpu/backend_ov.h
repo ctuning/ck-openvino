@@ -79,8 +79,8 @@ public:
         Core ie;
         const std::string device { "CPU" };
         if (device == "CPU") {
-            ie.AddExtension(std::make_shared<Extensions::Cpu::MKLDNNExtensions>(),
-                    "CPU");
+//            ie.AddExtension(std::make_shared<Extensions::Cpu::MKLDNNExtensions>(),
+//                    "CPU");
             if (settings_.scenario == mlperf::TestScenario::SingleStream) {
                 ie.SetConfig(
                         { { CONFIG_KEY(CPU_THREADS_NUM), std::to_string(
