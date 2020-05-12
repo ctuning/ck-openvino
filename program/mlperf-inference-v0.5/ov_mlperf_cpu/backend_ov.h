@@ -2,8 +2,9 @@
 #define BACKENDOV_H__
 
 #include <inference_engine.hpp>
-#include <list.hpp>
-
+#ifdef BUILD_2019
+#include <ext_list.hpp>
+#endif
 #include "infer_request_wrap.h"
 
 using namespace InferenceEngine;
@@ -79,8 +80,10 @@ public:
         Core ie;
         const std::string device { "CPU" };
         if (device == "CPU") {
-//            ie.AddExtension(std::make_shared<Extensions::Cpu::MKLDNNExtensions>(),
-//                    "CPU");
+#ifdef BUILD_2019
+            ie.AddExtension(std::make_shared<Extensions::Cpu::CpuExtensions>(),
+                    "CPU");
+#endif
             if (settings_.scenario == mlperf::TestScenario::SingleStream) {
                 ie.SetConfig(
                         { { CONFIG_KEY(CPU_THREADS_NUM), std::to_string(
