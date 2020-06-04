@@ -238,3 +238,131 @@ INFO:main:starting TestScenario.Offline
 TestScenario.Offline qps=44.04, mean=6.1680, time=10.490, queries=462, tiles=50.0:6.0186,80.0:9.5817,90.0:10.2260,95.0:10.4660,99.0:10.4660,99.9:10.4660
 ```
 
+<a name="tf_2_1"></a>
+### MKL-optimized (?) TensorFlow 2.1
+
+```bash
+$ docker pull ctuning/mlperf-inference-vision-with-ck.intel.ubuntu-18.04:2.1.0-mkl-py3
+```
+
+#### Accuracy on the COCO 2017 validation set
+
+```bash
+$ export NPROCS=$((`grep -c processor /proc/cpuinfo` / 2)) && \
+  docker run ctuning/mlperf-inference-vision-with-ck.intel.ubuntu-18.04:2.1.0-mkl-py3 \
+  "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
+  --env.CK_LOADGEN_SCENARIO=Offline --env.CK_LOADGEN_MODE='--accuracy' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 5000 --max-batchsize 1' \
+  --env.CK_LOADGEN_REF_PROFILE=default_tf_object_det_zoo \
+  --dep_add_tags.weights=ssd,mobilenet-v1,mlperf,quantized"
+  --env.KMP_SETTINGS=1 --env.KMP_BLOCKTIME=1 --env.KMP_AFFINITY='granularity=fine,compact,1,0' \
+  --env.OMP_NUM_THREADS=$NPROCS"
+...
+INFO:main:Namespace(accuracy=True, backend='tensorflow', backend_params='BATCH_SIZE:1,TENSORRT_PRECISION:FP32,TENSORRT_DYNAMIC:0', cache=0, config='/home/dvdt/CK_TOOLS/mlperf-inference-upstream.master/inference/v0.5/mlperf.conf', count=5000, data_format=None, dataset='coco-standard', dataset_height=300, dataset_list=None, dataset_path='/home/dvdt/CK_TOOLS/dataset-coco-2017-val', dataset_width=300, find_peak_performance=False, inputs=['image_tensor:0'], max_batchsize=1, max_latency=None, model='/home/dvdt/CK_TOOLS/model-tf-mlperf-ssd-mobilenet-quantized-finetuned/graph.pb', model_name='${CK_ENV_TENSORFLOW_MODEL_MODEL_NAME}', output=None, outputs=['num_detections:0', 'detection_boxes:0', 'detection_scores:0', 'detection_classes:0'], profile='default_tf_object_det_zoo', qps=None, samples_per_query=None, scenario='Offline', threads=20, time=None)
+INFO:coco:loaded 5000 images, cache=0, took=93.7sec
+2020-06-04 13:07:12.428599: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-06-04 13:07:13.269997: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2294550000 Hz
+2020-06-04 13:07:13.282636: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x8ec4570 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-06-04 13:07:13.282681: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-06-04 13:07:13.294754: I tensorflow/core/common_runtime/process_util.cc:147] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
+INFO:main:starting TestScenario.Offline
+...
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.236
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.362
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.258
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.019
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.166
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.544
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.212
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.267
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.268
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.025
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.191
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.618
+TestScenario.Offline qps=129.41, mean=4.1776, time=38.637, acc=94.0231%, mAP=23.566332815709149%, queries=5000, tiles=50.0:4.2399,80.0:5.2161,90.0:5.4090,95.0:5.5132,99.0:5.6607,99.9:5.7809
+```
+
+#### Performance with the default parameters
+
+```bash
+$ docker run ctuning/mlperf-inference-vision-with-ck.intel.ubuntu-18.04:2.1.0-mkl-py3 \
+  "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
+  --env.CK_LOADGEN_SCENARIO=Offline --env.CK_LOADGEN_MODE='' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 462' \
+  --env.CK_LOADGEN_REF_PROFILE=default_tf_object_det_zoo \
+  --dep_add_tags.weights=ssd,mobilenet-v1,mlperf,quantized"
+...
+2020-06-04 13:14:03.208913: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2020-06-04 13:14:03.215571: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2294550000 Hz
+2020-06-04 13:14:03.216924: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x43f0270 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-06-04 13:14:03.216942: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-06-04 13:14:03.217047: I tensorflow/core/common_runtime/process_util.cc:147] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
+INFO:main:starting TestScenario.Offline
+TestScenario.Offline qps=26.05, mean=10.1722, time=17.736, queries=462, tiles=50.0:10.3504,80.0:15.4264,90.0:17.6162,95.0:17.7094,99.0:17.7094,99.9:17.7094
+```
+
+#### Performance with all virtual CPU cores
+
+```bash
+$ export NPROCS=`grep -c processor /proc/cpuinfo` && \
+  docker run ctuning/mlperf-inference-vision-with-ck.intel.ubuntu-18.04:2.1.0-mkl-py3 \
+  "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
+  --env.CK_LOADGEN_SCENARIO=Offline --env.CK_LOADGEN_MODE='' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 462' \
+  --env.CK_LOADGEN_REF_PROFILE=default_tf_object_det_zoo \
+  --dep_add_tags.weights=ssd,mobilenet-v1,mlperf,quantized \
+  --env.KMP_SETTINGS=1 --env.KMP_BLOCKTIME=1 --env.KMP_AFFINITY='granularity=fine,compact,1,0' \
+  --env.OMP_NUM_THREADS=$NPROCS"
+...
+2020-06-04 13:15:27.034484: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled t
+o use: AVX2 FMA
+
+User settings:
+
+   KMP_AFFINITY=granularity=fine,compact,1,0
+   KMP_BLOCKTIME=1
+   KMP_SETTINGS=1
+   OMP_NUM_THREADS=20
+...
+2020-06-04 13:15:27.041504: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2294550000 Hz
+2020-06-04 13:15:27.043613: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x7a66ab0 initialized for platform Host (this does not guarantee tha
+t XLA will be used). Devices:
+2020-06-04 13:15:27.043649: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-06-04 13:15:27.043776: I tensorflow/core/common_runtime/process_util.cc:147] Creating new thread pool with default inter op setting: 2. Tune using inter_
+op_parallelism_threads for best performance.
+INFO:main:starting TestScenario.Offline
+TestScenario.Offline qps=33.82, mean=8.0507, time=13.659, queries=462, tiles=50.0:7.9636,80.0:12.4265,90.0:13.3861,95.0:13.6354,99.0:13.6354,99.9:13.6354
+```
+
+#### Performance with all physical CPU cores
+
+```bash
+$ export NPROCS=$((`grep -c processor /proc/cpuinfo` / 2)) && \
+  docker run ctuning/mlperf-inference-vision-with-ck.intel.ubuntu-18.04:2.1.0-mkl-py3 \
+  "ck run program:mlperf-inference-vision --cmd_key=direct --skip_print_timers \
+  --env.CK_LOADGEN_SCENARIO=Offline --env.CK_LOADGEN_MODE='' \
+  --env.CK_LOADGEN_EXTRA_PARAMS='--count 462' \
+  --env.CK_LOADGEN_REF_PROFILE=default_tf_object_det_zoo \
+  --dep_add_tags.weights=ssd,mobilenet-v1,mlperf,quantized \
+  --env.KMP_SETTINGS=1 --env.KMP_BLOCKTIME=1 --env.KMP_AFFINITY='granularity=fine,compact,1,0' \
+  --env.OMP_NUM_THREADS=$NPROCS"
+...
+2020-06-04 13:16:54.080275: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled t
+o use: AVX2 FMA
+
+User settings:
+
+   KMP_AFFINITY=granularity=fine,compact,1,0
+   KMP_BLOCKTIME=1
+   KMP_SETTINGS=1
+   OMP_NUM_THREADS=10
+...
+2020-06-04 13:16:54.087292: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 2294550000 Hz
+2020-06-04 13:16:54.088427: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x6765560 initialized for platform Host (this does not guarantee tha
+t XLA will be used). Devices:
+2020-06-04 13:16:54.088444: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-06-04 13:16:54.088520: I tensorflow/core/common_runtime/process_util.cc:147] Creating new thread pool with default inter op setting: 2. Tune using inter_
+op_parallelism_threads for best performance.
+INFO:main:starting TestScenario.Offline
+TestScenario.Offline qps=44.26, mean=6.1474, time=10.438, queries=462, tiles=50.0:6.0423,80.0:9.4969,90.0:10.1914,95.0:10.4173,99.0:10.4173,99.9:10.4173
+```
