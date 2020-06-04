@@ -314,8 +314,7 @@ $ export NPROCS=`grep -c processor /proc/cpuinfo` && \
   --env.KMP_SETTINGS=1 --env.KMP_BLOCKTIME=1 --env.KMP_AFFINITY='granularity=fine,compact,1,0' \
   --env.OMP_NUM_THREADS=$NPROCS"
 ...
-2020-06-04 13:15:27.034484: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled t
-o use: AVX2 FMA
+2020-06-04 13:15:27.034484: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
 
 User settings:
 
@@ -347,8 +346,7 @@ $ export NPROCS=$((`grep -c processor /proc/cpuinfo` / 2)) && \
   --env.KMP_SETTINGS=1 --env.KMP_BLOCKTIME=1 --env.KMP_AFFINITY='granularity=fine,compact,1,0' \
   --env.OMP_NUM_THREADS=$NPROCS"
 ...
-2020-06-04 13:16:54.080275: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled t
-o use: AVX2 FMA
+2020-06-04 13:16:54.080275: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
 
 User settings:
 
@@ -365,4 +363,14 @@ t XLA will be used). Devices:
 op_parallelism_threads for best performance.
 INFO:main:starting TestScenario.Offline
 TestScenario.Offline qps=44.26, mean=6.1474, time=10.438, queries=462, tiles=50.0:6.0423,80.0:9.4969,90.0:10.1914,95.0:10.4173,99.0:10.4173,99.9:10.4173
+```
+
+**NB:** Note that the performance with the `2.1.0-mkl-py3`-based image is the same as with the `2.0.1-mkl-py3`-based image despite the scary message:
+> Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+
+MKL is actually enabled, as can be confirmed by running:
+```bash
+$ docker run ctuning/mlperf-inference-vision-with-ck.intel.ubuntu-18.04:2.1.0-mkl-py3 \
+"python -c 'from tensorflow.python import _pywrap_util_port; print(_pywrap_util_port.IsMklEnabled())'"
+True
 ```
