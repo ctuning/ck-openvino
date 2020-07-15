@@ -163,7 +163,7 @@
     },
     "2020.3": {
       "extra_env": {
-        "PACKAGE_GIT_CHECKOUT": "2020.3"
+        "PACKAGE_GIT_CHECKOUT": "2020.3.0"
       },
       "extra_customize": {
         "version": "2020.3"
