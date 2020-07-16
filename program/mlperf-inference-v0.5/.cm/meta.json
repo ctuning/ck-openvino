@@ -36,7 +36,7 @@
       "local": "yes", 
       "name": "OpenCV library", 
       "sort": 50,
-      "tags": "lib,opencv,channel-stable"
+      "tags": "lib,opencv"
     },
     "boost": {
       "local": "yes", 
