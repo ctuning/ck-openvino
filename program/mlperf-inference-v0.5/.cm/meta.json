@@ -166,7 +166,7 @@
         "CK_LOADGEN_TASK"           : "object-detection",
         "CK_LOADGEN_SCENARIO"       : "Offline",
         "CK_LOADGEN_MODE"           : "Accuracy",
-	"CK_OPENVINO_NVIRTCPUS"     : 112,
+        "CK_OPENVINO_NVIRTCPUS"     : 112,
         "CK_OPENVINO_NWARMUP_ITERS" : 1000
       }
     },

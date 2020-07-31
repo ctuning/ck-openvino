@@ -59,7 +59,7 @@ def ck_preprocess(i):
 
     cmd_key = i['misc']['cmd_key']
     run_vars = i['meta']['run_cmds'][cmd_key]['run_vars']
-    user_conf_rel_path = run_vars['CK_LOADGEN_USER_CONF']
+    user_conf_rel_path = run_vars.get('CK_LOADGEN_USER_CONF', '../user.conf.custom') # FIXME: default rel path should be defined in meta.
     user_conf_abs_path = os.path.join(os.path.abspath(os.path.curdir), user_conf_rel_path)
     with open(user_conf_abs_path, 'w') as user_conf_file:
          user_conf_file.writelines(user_conf)
