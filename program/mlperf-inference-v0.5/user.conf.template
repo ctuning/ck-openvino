@@ -6,3 +6,4 @@
 *.*.max_query_count = 0
 *.*.samples_per_query = 1
 *.*.target_qps = 1
+*.*.target_latency = 1

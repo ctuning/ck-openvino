@@ -46,6 +46,7 @@ def ck_preprocess(i):
                     'max_query_count'                  : 'CK_LOADGEN_MAX_QUERY_COUNT',
                     'performance_sample_count_override': 'CK_LOADGEN_BUFFER_SIZE',
                     'samples_per_query'                : 'CK_LOADGEN_SAMPLES_PER_QUERY',
+                    'target_latency'                   : 'CK_LOADGEN_TARGET_LATENCY',
                     'target_qps'                       : 'CK_LOADGEN_TARGET_QPS'
                 }
                 for conf_name, env_name in conf_to_env_map.items():
