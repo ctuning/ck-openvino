@@ -55,6 +55,11 @@
         3,
         4
       ],
+      "version_to": [
+        3,
+        4,
+	99
+      ],
       "sort": 50,
       "tags": "lib,opencv",
       "no_tags": "python-package"
