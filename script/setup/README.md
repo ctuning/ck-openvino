@@ -2,9 +2,9 @@
 
 # Setup
 
-## System-level dependencies
+## Set up system-level dependencies
 
-Setting up system-level requires system-specific scripts with superuser privileges (or under `sudo`).
+Setting up system-level requires running system-specific scripts with superuser privileges (or under `sudo`).
 
 ### Ubuntu 18.04
 
@@ -18,6 +18,19 @@ $ sudo ./setup.ubuntu-18.04.sh
 $ sudo ./setup.amazonlinux-2.sh
 ```
 
-## User-space dependencies
+## Set up user-space dependencies
 
-**TODO**
+Setting up user-space dependencies requires running the following script:
+```bash
+$ ./setup.user.sh
+```
+
+## Register ImageNet with CK
+
+Unfortunately, ImageNet can [no longer](https://github.com/mlperf/inference_policies/issues/125) be automatically downloaded.
+If you have a copy of ImageNet in e.g. `/datasets/dataset-imagenet-ilsvrc2012-val/`, you can register it with CK as follows:
+
+```bash
+$ ck detect soft:dataset.imagenet.val \
+--full_path=/datasets/dataset-imagenet-ilsvrc2012-val/ILSVRC2012_val_00000001.JPEG
+```
