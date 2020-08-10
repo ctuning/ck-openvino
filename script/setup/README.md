@@ -8,8 +8,14 @@ Setting up system-level requires system-specific scripts with superuser privileg
 
 ### Ubuntu 18.04
 
+```bash
+$ sudo ./setup.ubuntu-18.04.sh
 ```
-$ sudo ./setup.ubuntu-18.04
+
+### Amazon Linux 2
+
+```bash
+$ sudo ./setup.amazonlinux-2.sh
 ```
 
 ## User-space dependencies
