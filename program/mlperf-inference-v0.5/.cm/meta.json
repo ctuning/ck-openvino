@@ -35,6 +35,7 @@
     "opencv": {
       "local": "yes", 
       "name": "OpenCV library", 
+      "no_tags": "python-package",
       "sort": 50,
       "tags": "lib,opencv"
     },
