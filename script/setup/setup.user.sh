@@ -11,8 +11,14 @@ export CK_CC=gcc
 export CK_PYTHON=/usr/bin/python3
 export CK_PYTHON_BIN=/usr/bin/python3
 
+# Install implicit Python dependencies (for Model Optimizer and LoadGen).
+${CK_PYTHON} -m pip install ck --user && ck version
+${CK_PYTHON} -m pip install --ignore-installed pip setuptools --user
+${CK_PYTHON} -m pip install --user \
+  nibabel pillow progress py-cpuinfo pyyaml shapely sklearn tqdm xmltodict yamlloader
+
 # Pull CK repositories (including ck-mlperf, ck-env, ck-autotuning, ck-tensorflow, ck-docker).
-ck pull repo:ck-openvino
+ck pull repo --url=git@github.com:dividiti/ck-openvino
 
 # Use generic Linux settings with dummy frequency setting scripts.
 ck detect platform.os --platform_init_uoa=generic-linux-dummy
@@ -23,12 +29,6 @@ ck detect soft:compiler.python --full_path=`which ${CK_PYTHON}` --quiet
 # Detect CMake (build tool).
 ck detect soft --tags=cmake --full_path=`which cmake` --quiet
 ck show env --tags=64bits
-
-# Install implicit Python dependencies (for Model Optimizer and LoadGen).
-${CK_PYTHON} -m pip install ck --user && ck version
-${CK_PYTHON} -m pip install --ignore-installed pip setuptools --user
-${CK_PYTHON} -m pip install --user \
-  nibabel pillow progress py-cpuinfo pyyaml shapely sklearn tqdm xmltodict yamlloader
 
 #-----------------------------------------------------------------------------#
 # Step 1. Install explicit Python dependencies (for Model Optimizer and LoadGen).
@@ -51,7 +51,8 @@ ck install package --tags=lib,python-package,cv2,opencv-python-headless
 # Step 2. Install C++ dependencies (for Inference Engine and MLPerf program).
 #-----------------------------------------------------------------------------#
 ck install package --tags=lib,opencv,v3.4.10
-ck install package --tags=lib,boost,v1.67.0,without-python --no_tags=min-for-caffe
+#ck install package --tags=lib,boost,v1.67.0,without-python --no_tags=min-for-caffe
+ck install package --tags=lib,boost,v1.67.0 --no_tags=min-for-caffe
 # Install LoadGen from a branch reconstructed according to Intel's README.
 ck install package --tags=mlperf,inference,source,dividiti.v0.5-intel
 ck install package --tags=lib,loadgen,static
