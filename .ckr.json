@@ -7,10 +7,10 @@
     "repo_deps": [
       {
         "repo_uoa": "ck-mlperf",
-	"repo_url": "https://github.com/dividiti/ck-mlperf"
+        "repo_url": "https://github.com/ctuning/ck-mlperf"
       }
     ],
     "shared": "git",
-    "url": "https://github.com/dividiti/ck-openvino"
+    "url": "https://github.com/ctuning/ck-openvino"
   }
 }
