@@ -1,5 +1,7 @@
 # [Collective Knowledge](http://cknowledge.org) workflows for [OpenVINO](https://01.org/openvinotoolkit) toolkit
 
+*This repository may be outdated - please follow [this repository](https://github.com/dividiti/ck-openvino).*
+
 ## MLPerf Inference v0.5 demo
 
 Download and run a [Docker image](https://hub.docker.com/r/ctuning/mlperf-inference-v0.5.openvino) built from reusable CK components:
