@@ -1,6 +1,6 @@
 # [Collective Knowledge](http://cknowledge.org) workflows for [OpenVINO](https://01.org/openvinotoolkit) toolkit
 
-*This repository may be outdated - please follow [this repository](https://github.com/dividiti/ck-openvino).*
+**All CK components for AI and ML are now collected in [one repository](https://github.com/ctuning/ai)!**
 
 ## MLPerf Inference v0.5 demo
 

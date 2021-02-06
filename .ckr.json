@@ -6,7 +6,8 @@
   "dict": {
     "repo_deps": [
       {
-        "repo_uoa": "ck-mlperf"
+        "repo_uoa": "ck-mlperf",
+        "repo_url": "https://github.com/ctuning/ck-mlperf"
       }
     ],
     "shared": "git",
